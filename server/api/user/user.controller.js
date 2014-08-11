@@ -100,11 +100,12 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
-exports.search = function(req, res, next){
-   var pattern = new RegExp('.*'+req.body.pattern+'.*','i');
-   User.find({'name':pattern},function(err,users){
-      res.json(users.map(function(i){
-        i.userData();
-      }));
-   });
-};
+
+// exports.search = function(req, res, next){
+//    var pattern = new RegExp('.*'+req.body.pattern+'.*','i');
+//    User.find({'name':pattern},function(err,users){
+//       res.json(users.map(function(i){
+//         i.userData();
+//       }));
+//    });
+

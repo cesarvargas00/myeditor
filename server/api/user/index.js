@@ -9,6 +9,7 @@ var router = express.Router();
 
 router.get('/search/:pattern', auth.isAuthenticated(), controller.search);
 router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/bla', auth.isAuthenticated(), controller.bla);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
