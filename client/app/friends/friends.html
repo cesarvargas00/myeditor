@@ -1,0 +1,35 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+ <div class='container'>
+    <div class="col-lg-6">
+
+    </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    </div>
+
+    <div class='container'>
+      <form class="form-inline" role="form" ng-submit='submit()'>
+      <div class="form-group">
+      <div class="input-group">
+      <div class="input-group-addon"><i class='glyphicon glyphicon-user'></i></div>
+      <input class="form-control" name="username" placeholder="Enter username">
+       </div>
+      </div>
+     <button type="submit" class="btn btn-success"><i class='glyphicon glyphicon-search
+'><span> search </span></i></button>
+</form>
+    </div>
+    <br>
+    <br>
+    <div class='container'>
+    <table class='table table-hover' id='friend_list'>
+      <tr ng-repeat='friend in friends'>
+      <td class="info text-center">{{friend.name}}</td>
+      <td class="success">{{friend.email}}</td>
+       <td><button class='btn btn-danger'><i class='glyphicon glyphicon-remove-circle'><span> remove</span></i></button></td>
+      </tr>
+    </table>
+
+    </div>
+    <div id="dialog" style="visibility:hide">
+    <p id="message"></p>
+    </div>

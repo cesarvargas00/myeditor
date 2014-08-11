@@ -13,7 +13,9 @@ var UserSchema = new Schema({
   },
   hashedPassword: String,
   provider: String,
-  salt: String
+  salt: String,
+  friends:[{type:Schema.Types.ObjectId ,ref: 'User'}],
+  request_friends:[{type:Schema.Types.ObjectId ,ref: 'User'}]
 });
 
 /**
