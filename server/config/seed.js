@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Problem = require('../api/problem/problem.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -28,6 +29,10 @@ Thing.find({}).remove(function() {
     name : 'Deployment Ready',
     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   });
+});
+
+Problem.find({}).remove(function(){
+  console.log('Removed all problems');
 });
 
 User.find({}).remove(function() {
