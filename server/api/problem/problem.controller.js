@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Problem = require('./problem.model');
 
-// Get list of problems
+// Get list of problems from this user
 exports.index = function(req, res) {
     Problem.find({owner_id:req.user._id},function(err, problems) {
         if (err) {
@@ -19,7 +19,7 @@ exports.show = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        if (!problem) {
+        if (!problem || problem.owner_id !== req.user._id.toString()) {
             return res.send(404);
         }
         return res.json(problem);

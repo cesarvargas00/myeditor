@@ -7,7 +7,8 @@ angular.module('myEditorApp', [
   'ngRoute',
   'btford.socket-io',
   'ui.bootstrap',
-  'summernote'
+  'summernote',
+  'ui.ace'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

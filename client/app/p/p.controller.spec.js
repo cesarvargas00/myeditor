@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: ProblemCtrl', function () {
+describe('Controller: PCtrl', function () {
 
   // load the controller's module
   beforeEach(module('myEditorApp'));
 
-  var ProblemCtrl, scope;
+  var PCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ProblemCtrl = $controller('ProblemCtrl', {
+    PCtrl = $controller('PCtrl', {
       $scope: scope
     });
   }));

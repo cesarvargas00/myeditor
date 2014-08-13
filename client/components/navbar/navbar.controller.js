@@ -4,7 +4,7 @@ angular.module('myEditorApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': '/home'
     }];
 
     $scope.isCollapsed = true;
