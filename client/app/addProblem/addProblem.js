@@ -5,6 +5,7 @@ angular.module('myEditorApp')
     $routeProvider
       .when('/addProblem', {
         templateUrl: 'app/addProblem/addProblem.html',
-        controller: 'AddproblemCtrl'
+        controller: 'AddproblemCtrl',
+        authenticate: true
       });
   });

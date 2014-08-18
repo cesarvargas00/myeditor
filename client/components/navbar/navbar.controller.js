@@ -4,7 +4,7 @@ angular.module('myEditorApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth,socket) {
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': '/home'
     }];
 
     $scope.add = function(id){
