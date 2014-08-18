@@ -16,7 +16,15 @@ angular.module('myEditorApp')
 
     return {
       socket: socket,
+      syncUpdateUser: function(user){
+        socket.on('user:save',function(item){
+            if(item._id === user._id) {
+              user.friends = item.friends;
+              user.request_friends = item.request_friends;
+            }
+        });
 
+      },
       /**
        * Register listeners to sync an array with updates on a model
        *

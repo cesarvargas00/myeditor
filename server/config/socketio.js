@@ -7,19 +7,28 @@
 var config = require('./environment');
 
 // When the user disconnects.. perform this
-function onDisconnect(socket) {
+function onDisconnect(socket,list) {
+  for(var i in list) {
+      if(list[i].id == socket.id) {
+        delete list[i];
+        break;
+      }
+  }
 }
 
 // When the user connects.. perform this
-function onConnect(socket) {
+function onConnect(socket,list) {
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
+    list[data] = socket;
+    require('../api/user/user.socket').request(socket,list);
+    console.log('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
   // Insert sockets below
   require('../api/problem/problem.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
+  require('../api/user/user.socket').register(socket);
 }
 
 module.exports = function (socketio) {
@@ -37,7 +46,7 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
-
+  var user_list = {};
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
@@ -48,11 +57,11 @@ module.exports = function (socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      console.log('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
-    onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    onConnect(socket,user_list);
+    console.log('[%s] CONNECTED', socket.address);
   });
 };

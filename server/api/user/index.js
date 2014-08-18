@@ -9,10 +9,13 @@ var router = express.Router();
 
 router.get('/search/:pattern', auth.isAuthenticated(), controller.search);
 router.get('/', auth.hasRole('admin'), controller.index);
-router.get('/bla', auth.isAuthenticated(), controller.bla);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
+router.put('/:id/request',auth.isAuthenticated(),controller.request);
+router.delete('/:id/request',auth.isAuthenticated(),controller.deleteRequest);
+router.put('/:id/add',auth.isAuthenticated(),controller.add);
+router.delete('/:id/friend',auth.isAuthenticated(),controller.deleteFriend);
 module.exports = router;

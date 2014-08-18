@@ -29,7 +29,7 @@ function isAuthenticated() {
 
         if (err) return next(err);
         if (!user) return res.send(401);
-        console.log(user);
+
         req.user = user;
         next();
       });

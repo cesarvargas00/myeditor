@@ -11,7 +11,7 @@
       <div class="form-group">
       <div class="input-group">
       <div class="input-group-addon"><i class='glyphicon glyphicon-user'></i></div>
-      <input class="form-control" name="username" placeholder="Enter username">
+      <input ng-model='query.pattern' class="form-control" name="username" placeholder="Enter username">
        </div>
       </div>
      <button type="submit" class="btn btn-success"><i class='glyphicon glyphicon-search
@@ -22,10 +22,10 @@
     <br>
     <div class='container'>
     <table class='table table-hover' id='friend_list'>
-      <tr ng-repeat='friend in friends'>
+      <tr ng-repeat='friend in u.friends'>
       <td class="info text-center">{{friend.name}}</td>
       <td class="success">{{friend.email}}</td>
-       <td><button class='btn btn-danger'><i class='glyphicon glyphicon-remove-circle'><span> remove</span></i></button></td>
+       <td><button ng-click='delete(friend._id)' class='btn btn-danger'><i class='glyphicon glyphicon-remove-circle'><span> remove</span></i></button></td>
       </tr>
     </table>
 

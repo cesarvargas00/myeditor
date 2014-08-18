@@ -6,6 +6,30 @@ angular.module('myEditorApp')
       id: '@_id'
     },
     {
+      friendReq:{
+        method:'PUT',
+        params:{
+          controller:'request'
+        }
+      },
+      ignoreReq:{
+        method:'DELETE',
+        params: {
+          controller:'request'
+        }
+      },
+      deleteFriend:{
+        method: 'DELETE',
+        params:{
+          controller:'friend'
+        }
+      },
+      addFriend: {
+        method:'PUT',
+        params:{
+          controller:'add'
+        }
+      },
       changePassword: {
         method: 'PUT',
         params: {

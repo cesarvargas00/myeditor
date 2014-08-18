@@ -42,6 +42,9 @@ UserSchema
     };
   });
 
+UserSchema.virtual('userData').get(function(){
+  return {'name':this.name,'_id':this._id,'email':this.email};
+});
 // Non-sensitive info we'll be putting in the token
 UserSchema
   .virtual('token')

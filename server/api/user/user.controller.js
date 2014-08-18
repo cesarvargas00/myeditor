@@ -89,10 +89,91 @@ exports.me = function(req, res, next) {
   }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
     if (err) return next(err);
     if (!user) return res.json(401);
-    res.json(user);
+    user.populate({path:'request_friends',select:'_id name'},function(err,u){
+      u.populate({path:'friends',select:'_id name email'},function(err,us){
+          res.json(us);
+      });
+    });
+
   });
 };
 
+exports.add = function(req,res,next) {
+   var userId = req.user._id;
+   User.findById(userId,function(err,user){
+      for(var i in user.request_friends){
+        if(user.request_friends[i] == req.params.id) {
+          user.request_friends.splice(i,1);
+          break;
+        }
+      }
+      user.friends.push(req.params.id);
+      user.save(function(err){
+        User.findById(req.params.id,function(err,doc){
+           for(var i in doc.request_friends){
+             if(doc.request_friends[i] == userId) {
+               doc.request_friends.splice(i,1);
+               break;
+             }
+           }
+           doc.friends.push(userId);
+           doc.save(function(err){
+               if (err) return validationError(res, err);
+               res.send(200);
+           });
+        });
+      });
+   });
+};
+exports.request = function(req,res,next) {
+    var userId = req.user._id;
+    var temp = req.params.id;
+    User.findById(temp,function(err,d){
+        // for(var i =0 ;i<d.request_friends.length ; i++) {
+        //      if(String(d.request_friends[i]) === String(userId)) {
+        //       return res.json({message:'added'});
+        //      }
+        // }
+        d.request_friends.push(userId);
+        d.save(function(err) {
+        if (err) return validationError(res, err);
+        res.json({message:'added'});
+      });
+    });
+};
+
+
+exports.deleteRequest= function(req,res,next) {
+    var userId = req.user._id;
+    var temp = req.params.id;
+    User.findById(userId,function(err,d){
+        for(var i in d.request_friends){
+            if(String(d.request_friends[i]) === String(temp)) {
+               d.request_friends.splice(i,1);
+               break;
+            }
+        }
+        d.save(function(err){
+        if (err) return validationError(res, err);
+        res.send(200);
+      });
+    });
+};
+exports.deleteFriend = function(req,res,next){
+    var userId = req.user._id;
+    User.findById(userId,function(err,user){
+      for(var i in user.friends) {
+          if( req.params.id == user.friends[i]) {
+            user.friends.splice(i,1);
+            break;
+          }
+      }
+      user.save(function(err){
+        if (err) return validationError(res, err);
+        res.send(200);
+      });
+    });
+};
 /**
  * Authentication callback
  */
@@ -101,11 +182,27 @@ exports.authCallback = function(req, res, next) {
 };
 
 
-// exports.search = function(req, res, next){
-//    var pattern = new RegExp('.*'+req.body.pattern+'.*','i');
-//    User.find({'name':pattern},function(err,users){
-//       res.json(users.map(function(i){
-//         i.userData();
-//       }));
-//    });
+exports.search = function(req, res, next){
+   var pattern = new RegExp('.*'+req.params.pattern+'.*','i');
+   User.findById(req.user._id,function(err,user){
+      User.find({'name':pattern},function(err,users){
+        res.json(users.map(function(i){
+          var temp = i.userData;
+          temp.button = 'add';
+          user.friends.forEach(function(e){
+              if(String(e) === String(temp._id)) {
+                temp.button = 'remove';
+              }
+          });
+          i.request_friends.forEach(function(e){
+              if(String(e) === String(user._id)) {
+                temp.button = 'requesting';
+              }
+          });
+          console.log(i.request_friends + "|||" + temp._id);
+          return temp;
+      }));
+   });
+   });
+}
 

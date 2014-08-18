@@ -49,6 +49,16 @@ angular.module('myEditorApp')
         currentUser = {};
       },
 
+       addRequest:function(_id,callback) {
+          var cb = callback || angular.noop;
+          User.friendReq({_id:_id},function(data){
+            return cb(data);
+          });
+       },
+
+       ignoreRequest: function(id){
+          User.ignoreReq({id:id});
+       },
       /**
        * Create a new user
        *
@@ -71,6 +81,9 @@ angular.module('myEditorApp')
           }.bind(this)).$promise;
       },
 
+    deleteFriend: function(id){
+        User.deleteFriend({id:id});
+    },
       /**
        * Change password
        *
@@ -127,6 +140,9 @@ angular.module('myEditorApp')
         }
       },
 
+      addFriend:function(id){
+          User.addFriend({_id:id});
+      },
       /**
        * Check if a user is an admin
        *
