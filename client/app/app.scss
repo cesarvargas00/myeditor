@@ -1,6 +1,38 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
+$gray-light: lighten(#000, 60%) !default;
+$color1: #112F41;
+$color2: #065577;
+$color3: #6FB07F;
+$color4: #FCB03C;
+$color5: #FC5B3F;
+
+// Inverted navbar
+// Reset inverted navbar basics
+$navbar-inverse-color:                      $color5 !default;
+$navbar-inverse-bg:                         $color1 !default;
+$navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
+
+// Inverted navbar links
+$navbar-inverse-link-color:                 $color4 !default;
+$navbar-inverse-link-hover-color:           $color5 !default;
+$navbar-inverse-link-hover-bg:              transparent !default;
+$navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;
+$navbar-inverse-link-active-bg:             darken($navbar-inverse-bg, 10%) !default;
+$navbar-inverse-link-disabled-color:        #444 !default;
+$navbar-inverse-link-disabled-bg:           transparent !default;
+
+// Inverted navbar brand label
+$navbar-inverse-brand-color:                $navbar-inverse-link-color !default;
+$navbar-inverse-brand-hover-color:          $color5 !default;
+$navbar-inverse-brand-hover-bg:             transparent !default;
+
+// Inverted navbar toggle
+$navbar-inverse-toggle-hover-bg:            #fff !default;
+$navbar-inverse-toggle-icon-bar-bg:         $color5 !default;
+$navbar-inverse-toggle-border-color:        #fff !default;
+
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
 @import 'font-awesome/scss/font-awesome';
 
@@ -14,6 +46,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     color: #000;
     padding: 0.2em 0;
 }
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .badge {
@@ -21,6 +54,14 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
   margin-left: -3px;
   vertical-align: top;
   font-size: 10px;
+}
+
+body{
+  background-color:#fff;
+  color:$color1;
+  a{
+    color:$color5;
+  }
 }
 
 // Component styles are injected through grunt
@@ -31,6 +72,6 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'friends/friends.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';
-@import 'problem/problem.scss';
+@import 'p/p.scss';
 @import 'search_user/search_user.scss';
 // endinjector

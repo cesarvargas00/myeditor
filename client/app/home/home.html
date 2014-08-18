@@ -6,8 +6,10 @@
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h2>Problems</h2>
+
             <hr>
-            <table class="table table-hover">
+            <p ng-if="problems.length === 0">Hmm, it seems you don't have any problems yet. Wanna <a ng-href="/addProblem">add a problem</a> to your collection?</p>
+            <table class="table table-hover"  ng-if="problems.length !== 0">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -18,10 +20,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="problem in problems">
-                      <td>{{problem.title}}</td>
+                      <td><a ng-href="/p/{{problem._id}}">{{problem.title}}</a></td>
                       <td>{{problem.date}}</td>
                       <td>N/A</td>
-                      <td>Delete?</td>
+                      <td><a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a></td>
                     </tr>
                     <!-- data goes here -->
                 </tbody>
