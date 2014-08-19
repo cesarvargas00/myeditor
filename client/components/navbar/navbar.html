@@ -1,4 +1,27 @@
+<style>
+.notification{
+  width: 300px;
+  background-color: #FFC557;
+  color: black;
+}
 
+.notification div p{
+padding:1px 5px 0 5px;
+margin-bottom: 0px;
+}
+
+.tq7 {
+  background-color: #69A655;
+}
+.btn{
+  margin: 4px;
+}
+
+.notification hr{
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+</style>
 <div class="navbar-inverse navbar-static-top" ng-controller="NavbarCtrl">
   <div class="container">
     <div class="navbar-header">
@@ -23,7 +46,7 @@
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
         <li ng-show="isLoggedIn()"><p class="navbar-text">{{ user.name }}</p> </li>
         <li ng-show="isLoggedIn()" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-off"></i></a>
+          <a href="#" class="dropdown-toggle"> <i class="glyphicon glyphicon-off"></i></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="/profile">Profile</a></li>
             <li><a href="/friends">Friends</a></li>
@@ -32,19 +55,20 @@
           </ul>
         </li>
         <li ng-show="isLoggedIn()" class='dropdown'>
-          <a id='messagebox' ng-click='news = false' href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-envelope"><span ng-show='news' class="badge" id ='badge'>! </span></i></a>
-           <ul ng-click='$event.stopPropagation();' class="dropdown-menu" role="menu" id='request_list'>
+          <a id='messagebox' ng-click='news = false' href="#" class="dropdown-toggle"> <i class="glyphicon glyphicon-envelope"><span ng-show='news' class="badge" id ='badge'>! </span></i></a>
+           <ul ng-click='$event.stopPropagation();' class="dropdown-menu notification" role="menu" id='request_list'>
              <li ng-repeat='l in user.request_friends'>
-              <div>
-                  <p >{{l.name}}  wants to add you as a friend</p>
+                <div class="clearfix">
+                  <p style='color:#CC6857'>{{l.name}} </p> <p> wants to add you as a friend</p>
+                   <button ng-click='add(l._id)' class="btn btn-success btn-xs tq7">add</button>
                   <button ng-click='ignore(l._id)' class="btn btn-danger btn-xs">ignore</button>
-                  <button ng-click='add(l._id)' class="btn btn-success btn-xs ">add</button>
                </div>
+               <hr>
              </li>
           </ul>
         </li>
          <li ng-show="isLoggedIn()" class="dropdown">
-          <a  href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-edit"></i></a>
+          <a  href="#" class="dropdown-toggle" > <i class="glyphicon glyphicon-pencil"></i></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>

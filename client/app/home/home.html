@@ -23,7 +23,14 @@
                       <td><a ng-href="/p/{{problem._id}}">{{problem.title}}</a></td>
                       <td>{{problem.date}}</td>
                       <td>N/A</td>
-                      <td><a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a></td>
+                      <td>
+                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-fire"></i></a>
+                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-share"></i></a>
+                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-retweet"></i></a>
+
+                      </td>
                     </tr>
                     <!-- data goes here -->
                 </tbody>

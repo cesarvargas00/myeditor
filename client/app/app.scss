@@ -8,6 +8,10 @@ $color3: #6FB07F;
 $color4: #FCB03C;
 $color5: #FC5B3F;
 
+
+$table-bg-hover:                blue !default;
+
+
 // Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      $color5 !default;
@@ -56,6 +60,19 @@ $navbar-inverse-toggle-border-color:        #fff !default;
   font-size: 10px;
 }
 
+.dropdown-menu {
+  background-color: #334D5C;
+}
+.dropdown-menu >li > a {
+  color: #45B29D;
+}
+
+.dropdown-menu >li > a:hover {
+  background-color: #EFC94C;
+  color: #E27A3F;
+}
+
+
 body{
   background-color:#fff;
   color:$color1;
@@ -72,7 +89,7 @@ body{
 @import 'friends/friends.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';
-@import 'problem/problem.scss';
-@import 'search_user/search_user.scss';
 @import 'p/p.scss';
+@import 'profile/profile.scss';
+@import 'search_user/search_user.scss';
 // endinjector
