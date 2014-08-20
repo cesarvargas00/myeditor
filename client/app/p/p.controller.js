@@ -1,26 +1,27 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('PCtrl', function($scope, $routeParams, $http) {
+    .controller('PCtrl', function($scope, $routeParams, $http, $modal) {
         $scope.beenTested = false;
         $scope.testResult = '';
         $scope.modes = ['java'];
         $scope.code = {
-            content: 'Write the code here...',
+            content: '',
             currentMode: 'java'
         };
         $scope.tests = {
-            content: 'Write the tests here...',
+            content: '',
             currentMode: 'java'
         };
         $scope.problem = {};
+        //first thing being executed
         $http.get('/api/problems/' + $routeParams.id).success(function(problem) {
             $scope.problem = problem;
             if (problem.solution) {
                 $scope.code.content = problem.solution.java; //the first one.
             }
             if (problem.tests) {
-              $scope.tests.content = problem.tests;
+                $scope.tests.content = problem.tests;
             }
         });
 
@@ -33,12 +34,17 @@ angular.module('myEditorApp')
                 data: $scope.problem
             }).
             success(function(data, status, headers, config) {
-                console.log("Successfuly saved!");
-                //TODO: Have to make some feedback message. Modal?
+                var modalInstance = $modal.open({
+                    templateUrl: '/app/p/modal.html',
+                    size: 'md',
+                    controller: ModalInstanceCtrl
+                });
+                modalInstance.result.then(function(a) {
+                    console.log(a);
+                });
             }).
             error(function(data, status, headers, config) {
                 console.log("error, son...");
-                //TODO: Have to make some feedback message. Modal?
             });
         };
 
@@ -64,3 +70,9 @@ angular.module('myEditorApp')
             }
         };
     });
+
+var ModalInstanceCtrl = function($scope, $modalInstance) {
+    $scope.ok = function() {
+        $modalInstance.close('user clicked ok');
+    };
+};

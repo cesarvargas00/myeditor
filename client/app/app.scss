@@ -9,7 +9,7 @@ $color4: #FCB03C;
 $color5: #FC5B3F;
 
 
-$table-bg-hover:                blue !default;
+$table-bg-hover:                #ccc !default;
 
 
 // Inverted navbar
@@ -86,6 +86,7 @@ body{
 @import 'account/login/login.scss';
 @import 'addProblem/addProblem.scss';
 @import 'admin/admin.scss';
+@import 'c/c.scss';
 @import 'friends/friends.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';
