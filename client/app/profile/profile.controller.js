@@ -13,17 +13,21 @@ angular.module('myEditorApp')
             currentMode: 'javascript'
         };
         $scope.problem = {};
-        $http.get('/api/problems/' + $routeParams.id).success(function(problem) {
-            $scope.problem = problem;
-        });
 
         $scope.beenTested = false;
         $scope.testResult = '';
-        $scope.fireRef = new Firebase('my-editor.firebaseio.com/TEST/2');
+        var ranFirstTime = true;
         $scope.codeOptions = {
             mode: $scope.code.currentMode,
             onLoad: function(_ace) {
-                var firepad = Firepad.fromACE($scope.fireRef, _ace);
+                if(ranFirstTime){
+                var _session = _ace.getSession();
+                console.log(_ace);
+                var fireRef = new Firebase('my-editor.firebaseio.com/TEST/3');
+                var firepad = Firepad.fromACE(fireRef, _ace);
+                firepad.imageInsertionUI = false;
+                ranFirstTime = false;
+              }
                 // HACK to have the ace instance in the scope...
                 $scope.codeModeChanged = function() {
                     _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
