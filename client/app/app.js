@@ -8,7 +8,8 @@ angular.module('myEditorApp', [
   'btford.socket-io',
   'ui.bootstrap',
   'summernote',
-  'ui.ace'
+  'ui.ace',
+  'ui.multiselect'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

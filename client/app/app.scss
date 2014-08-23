@@ -67,6 +67,16 @@ $navbar-inverse-toggle-border-color:        #fff !default;
   color: #45B29D;
 }
 
+multiselect .dropdown-menu{
+    width: 250%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+multiselect .dropdown-menu > li > a {
+    padding: 3px 10px;
+    cursor:pointer;
+}
 .dropdown-menu >li > a:hover {
   background-color: #EFC94C;
   color: #E27A3F;
@@ -86,6 +96,7 @@ body{
 @import 'account/login/login.scss';
 @import 'addProblem/addProblem.scss';
 @import 'admin/admin.scss';
+@import 'collaborate/collaborate.scss';
 @import 'friends/friends.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';

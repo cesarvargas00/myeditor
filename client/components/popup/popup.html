@@ -1,0 +1,22 @@
+  <div class="modal-header">
+            <h3 class="modal-title">choose your friends!</h3>
+        </div>
+        <div class="modal-body">
+         <multiselect class="input-xlarge" multiple="true"
+        ng-model="o.selectedFriends"
+        options="f.name for f in u.friends"
+        change="selected()" ></multiselect>
+
+            <table class='table'>
+              <tr ng-repeat="sf in selectedFriends">
+              <td>{{sf.name}}</td>
+              <td>{{sf.email}}</td>
+            </tr>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</div>

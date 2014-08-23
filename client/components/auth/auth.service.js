@@ -48,7 +48,6 @@ angular.module('myEditorApp')
         $cookieStore.remove('token');
         currentUser = {};
       },
-
        addRequest:function(_id,callback) {
           var cb = callback || angular.noop;
           User.friendReq({_id:_id},function(data){
@@ -58,6 +57,10 @@ angular.module('myEditorApp')
 
        ignoreRequest: function(id){
           User.ignoreReq({id:id});
+       },
+
+       ignoreColla: function(id){
+          User.ignoreColla({id:id});
        },
       /**
        * Create a new user

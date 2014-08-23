@@ -13,7 +13,13 @@ angular.module('myEditorApp')
     $scope.ignore = function(id) {
         Auth.ignoreRequest(id);
     }
+    $scope.acceptColla = function(i){
+       $location.path('/collaborate/' + i.problem+'/session/' +  i.content);
+    }
 
+    $scope.ignoreColla = function(i){
+        Auth.ignoreColla(i._id);
+    }
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;

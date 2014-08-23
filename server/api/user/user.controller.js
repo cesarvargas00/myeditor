@@ -4,7 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
-
+var async = require('async');
 var validationError = function(res, err) {
   return res.json(422, err);
 };
@@ -91,13 +91,29 @@ exports.me = function(req, res, next) {
     if (!user) return res.json(401);
     user.populate({path:'request_friends',select:'_id name'},function(err,u){
       u.populate({path:'friends',select:'_id name email'},function(err,us){
-          res.json(us);
+        us.populate({path:'message.sender',select:'_id name', model:User},function(er,use){
+             res.json(use);
+        })
       });
     });
-
   });
 };
 
+exports.deleteColla = function(req,res,next){
+  var userId = req.user._id;
+  User.findById(userId,function(err,user){
+    for(var i in user.message){
+      if(user.message[i]._id.toString() === req.params.id) {
+        user.message.splice(i,1);
+        break;
+      }
+    }
+    user.save(function(err){
+     if (err) return validationError(res, err);
+     res.send(200);
+    });
+  });
+};
 exports.add = function(req,res,next) {
    var userId = req.user._id;
    User.findById(userId,function(err,user){
@@ -136,8 +152,8 @@ exports.request = function(req,res,next) {
         // }
         d.request_friends.push(userId);
         d.save(function(err) {
-        if (err) return validationError(res, err);
-        res.json({message:'added'});
+          if (err) return validationError(res, err);
+          res.json({message:'added'});
       });
     });
 };
@@ -154,8 +170,8 @@ exports.deleteRequest= function(req,res,next) {
             }
         }
         d.save(function(err){
-        if (err) return validationError(res, err);
-        res.send(200);
+         if (err) return validationError(res, err);
+         res.send(200);
       });
     });
 };
@@ -181,6 +197,33 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
+exports.collaborate = function(req,res,next) {
+  console.log(req.body.data[0]);
+  var task = [];
+  req.body.data.forEach(function(i){
+      task.push(function(callback){
+        User.findById(i,function(err,user){
+            user.message.push({sender:req.user._id,content:req.params.sId,problem:req.params.pId.toString()});
+            user.save(function(err) {
+            if (err) return validationError(res, err);
+              callback();
+            });
+        });
+      });
+  });
+  async.parallel(task,function(err,result){
+      if (err) return validationError(res, err);
+      else res.send(200);
+  });
+
+  // User.findById(req.params.id,function(err,user){
+  //     user.message.push({sender:req.user._id,content:req.params.sId,problem:req.pId});
+  //     user.save(function(err) {
+  //       if (err) return validationError(res, err);
+  //       res.send('200');
+  //     });
+  // });
+};
 
 exports.search = function(req, res, next){
    var pattern = new RegExp('.*'+req.params.pattern+'.*','i');
@@ -199,7 +242,6 @@ exports.search = function(req, res, next){
                 temp.button = 'requesting';
               }
           });
-          console.log(i.request_friends + "|||" + temp._id);
           return temp;
       }));
    });
