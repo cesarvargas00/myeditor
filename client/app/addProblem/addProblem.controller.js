@@ -10,7 +10,14 @@ angular.module('myEditorApp')
             $http.post('/api/problems', {
                 title: $scope.title,
                 description: $scope.description,
-                owner_id: Auth.getCurrentUser()._id
+                owner_id: Auth.getCurrentUser()._id,
+                solution:{
+                  java:'',
+                  javascript:'',
+                  cpp:'',
+                  python:''
+                },
+                tests:''
             })
                 .success(function() {
                     $scope.description = "";

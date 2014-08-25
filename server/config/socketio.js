@@ -26,6 +26,7 @@ function onConnect(socket,list) {
   });
 
   // Insert sockets below
+  require('../api/challenge/challenge.socket').register(socket);
   require('../api/problem/problem.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
   require('../api/user/user.socket').register(socket);

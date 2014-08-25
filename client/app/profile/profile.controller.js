@@ -35,6 +35,7 @@ angular.module('myEditorApp')
         $scope.codeOptions = {
             mode: $scope.code.currentMode,
             onLoad: function(_ace) {
+
                 // HACK to have the ace instance in the scope...
                var firepad = Firepad.fromACE($scope.fireRef, _ace,{userId:Auth.getCurrentUser().name});
 

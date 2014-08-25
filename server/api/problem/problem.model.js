@@ -17,10 +17,7 @@ var ProblemSchema = new Schema({
       "cpp": String,
       "python": String
   },
-  // permaLink: String, //this is the link of the problem. We should link it like
-  // // /username/problems/8726475  <---- this should be the sharing permalink
-  // // where 8726475 is the problem id. What do you think?
-  // //
+  tests: String,
   date: {
       type: Date,
       default: Date.now
