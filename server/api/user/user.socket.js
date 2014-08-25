@@ -10,7 +10,9 @@ exports.register = function(socket) {
   user.schema.post('save', function (doc) {
      doc.populate({path:'request_friends',select:'_id name'},function(err,u){
       u.populate({path:'friends',select:'_id name email'},function(err,us){
-        onSave(socket, us);
+        us.populate({path:'message.sender',select:'_id name'},function(err,use){
+            onSave(socket, use);
+        });
       });
     });
   });

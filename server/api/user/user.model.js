@@ -15,7 +15,19 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   friends:[{type:Schema.Types.ObjectId ,ref: 'User'}],
-  request_friends:[{type:Schema.Types.ObjectId ,ref: 'User'}]
+  request_friends:[{type:Schema.Types.ObjectId ,ref: 'User'}],
+  message:[{
+    content: String,
+    sender:{
+      type:Schema.Types.ObjectId ,
+      ref: 'User'
+    },
+     problem:{
+      type:Schema.Types.ObjectId ,
+      ref: 'Problem'
+    }
+
+  }]
 });
 
 /**

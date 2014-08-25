@@ -65,6 +65,14 @@ margin-bottom: 0px;
                </div>
                <hr>
              </li>
+             <li ng-repeat='i in user.message'>
+                 <div class="clearfix">
+                  <p style='color:#CC6857'>{{i.sender.name}} </p> <p> wants to invite you to collaborate coding</p>
+                  <button ng-click='acceptColla(i)' class="btn btn-success btn-xs tq7">accept</button>
+                  <button ng-click='ignoreColla(i)' class="btn btn-danger btn-xs">decline</button>
+               </div>
+               <hr>
+             </li>
           </ul>
         </li>
          <li ng-show="isLoggedIn()" class="dropdown">

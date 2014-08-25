@@ -12,6 +12,12 @@ angular.module('myEditorApp')
           controller:'request'
         }
       },
+      ignoreColla:{
+        method:'DELETE',
+        params: {
+          controller:'collaborate'
+        }
+      },
       ignoreReq:{
         method:'DELETE',
         params: {

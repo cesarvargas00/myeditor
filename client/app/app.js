@@ -9,7 +9,7 @@ angular.module('myEditorApp', [
   'ui.bootstrap',
   'summernote',
   'ui.ace',
-  'multi-select'
+  'ui.multiselect'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

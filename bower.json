@@ -21,7 +21,7 @@
     "angular-ui-ace": "~0.1.1",
     "firepad": "~0.1.4",
     "firebase": "~1.0.19",
-    "isteven-angular-multiselect": "~2.0.1"
+    "amitava82-angular-multiselect": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

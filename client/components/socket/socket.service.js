@@ -21,6 +21,7 @@ angular.module('myEditorApp')
             if(item._id === user._id) {
               user.friends = item.friends;
               user.request_friends = item.request_friends;
+              user.message = item.message;
             }
         });
 
