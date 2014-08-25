@@ -1,3 +1,58 @@
-<div class="col-md-12">
-This is the c view.
+<div ng-include="'components/navbar/navbar.html'"></div>
+<style>
+  .ace_editor { height: 150px; font-size: 15px;}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            <h1>{{problem.title}}</h1>
+            <hr>
+            <div ng-bind-html="problem.description"></div>
+            <hr>
+
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Code</h4>
+            <select style="margin-bottom:15px;" class="form-control" ng-model="code.currentMode" ng-options="mode for mode in modes" ng-change="codeModeChanged()"></select>
+            <div ui-ace="codeOptions" ng-model="code.content"></div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:15px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Tests</h4>
+<!--              <select style="margin-bottom:15px;" class="form-control" ng-model="tests.currentMode" ng-options="mode for mode in modes" ng-change="testsModeChanged()"></select> -->
+            <div ui-ace="testsOptions" ng-model="tests.content"></div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom:15px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button id="test-btn" type="button" class="btn btn-default">Run & Test</button>
+            <button ng-click="save()" type="button" class="btn btn-success">Save</button>
+            <div id="myspin"></div>
+        </div>
+
+    </div>
+    <div class="row" ng-show="beenTested">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="result" class="alert alert-success" role="alert">
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="beenTested">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success">
+                </div>
+                <div class="progress-bar progress-bar-danger">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
 </div>

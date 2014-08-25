@@ -13,10 +13,18 @@ angular.module('myEditorApp')
       //make a ui-bootstrap modal later to ask if really wanna delete problem.
     };
 
-    $scope.deleteProblem = function(problem){
-      $http.delete('api/problems/' + problem._id);
-      //make a ui-bootstrap modal later to ask if really wanna delete problem.
-    };
+    $scope.challenge = function(problem){
+      $http.post('api/challenges', {
+        owner_id:Auth.getCurrentUser._id,
+        problem_id:problem._id,
+        people: [{
+          user_id:Auth.getCurrentUser()._id
+        }]
+      }).success(function(data){
+        console.log('userId',Auth.getCurrentUser()._id);
+        console.log('problemId',data._id);
+      });
+    }
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('problem');

@@ -1,0 +1,31 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+
+
+    <h3>Choose whos taking the challenge:</h3>
+    <div multi-select input-model="friends" button-label="name" item-label="name" tick-property="ticked">
+    </div>
+    <p>{{friends}}</p>
+    <h3>Choose what problem you want to challenge your friends:</h3>
+    <select class="form-control" ng-model="selectedProblem" ng-options="problem.title for problem in problems">
+        <option value="" selected>--</option>
+    </select>
+    <p>{{selectedProblem}}</p>
+    <h3>Whats the duration of this challenge after they click accept?</h3>
+    <div class="row">
+        <div class="col-lg-1">
+            <input class="form-control" type="text" ng-model="timeLength">
+        </div>
+        <div class="col-lg-2">
+            <select class="form-control" ng-model="metricTime">
+                <option value="" selected>--</option>
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+                <option value="days">Days</option>
+            </select>
+        </div>
+
+    </div>
+
+
+    <!-- <script type="text/javascript" src="/js/addProblem.js"></script> -->

@@ -15,6 +15,7 @@ var ChallengeSchema = new Schema({
           'python':String,
           'javascript':String
         },
+        hasStarted: {type:Boolean, default:false},
         hasFinished: {type:Boolean, default:false},
         gotItRight: {type:Boolean, default:false}
     }],
