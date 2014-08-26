@@ -4,12 +4,11 @@
     <div class="row">
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
         </div>
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h2>Problems</h2>
-
+        <div class="well spacer col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <h4>Problems</h4>
             <hr>
             <p ng-if="problems.length === 0">Hmm, it seems you don't have any problems yet. Wanna <a ng-href="/addProblem">add a problem</a> to your collection?</p>
-            <table class="table table-hover"  ng-if="problems.length !== 0">
+            <table class="table table-hover" ng-if="problems.length !== 0">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -20,23 +19,37 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="problem in problems">
-                      <td><a ng-href="/p/{{problem._id}}">{{problem.title}}</a></td>
-                      <td>{{problem.date | date: 'shortDate'}}</td>
-                      <td>N/A</td>
-                      <td>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-edit"></i></a>
-                        <a ng-click="challenge(problem)"><i class="glyphicon glyphicon-fire"></i></a>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-share"></i></a>
-                        <a ng-click="open(problem)"><i class="glyphicon glyphicon-retweet"></i></a>
+                        <td><a ng-href="/p/{{problem._id}}">{{problem.title}}</a>
+                        </td>
+                        <td>{{problem.date | date: 'shortDate'}}</td>
+                        <td>N/A</td>
+                        <td>
+                            <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a>
+                            <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a ng-click="challenge(problem)"><i class="glyphicon glyphicon-fire"></i></a>
+                            <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-share"></i></a>
+                            <a ng-click="open(problem)"><i class="glyphicon glyphicon-retweet"></i></a>
 
-                      </td>
+                        </td>
                     </tr>
                     <!-- data goes here -->
                 </tbody>
             </table>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+        </div>
+        <div class="well col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <h4>Challenges</h4>
+            <hr>
+            <accordion ng-repeat="challenge in challenges" close-others="true">
+                <accordion-group heading="{{challenge.problem.title}} - {{challenge.duration}} minutes">
+                    {{challenge.friends.name}}
+                </accordion-group>
+            </accordion>
         </div>
     </div>
 </div>

@@ -16,10 +16,9 @@ var ChallengeSchema = new Schema({
           'javascript':String
         },
         hasStarted: {type:Boolean, default:false},
-        hasFinished: {type:Boolean, default:false},
         gotItRight: {type:Boolean, default:false}
     }],
-    duration: Date
+    duration: Number
 });
 
 module.exports = mongoose.model('Challenge', ChallengeSchema);

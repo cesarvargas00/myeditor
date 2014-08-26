@@ -6,5 +6,8 @@ angular.module('myEditorApp')
       .when('/addChallenge', {
         templateUrl: 'app/addChallenge/addChallenge.html',
         controller: 'AddchallengeCtrl'
+      }).when('/addChallenge/:id', {
+        templateUrl: 'app/addChallenge/addChallenge.html',
+        controller: 'AddchallengeCtrl'
       });
   });

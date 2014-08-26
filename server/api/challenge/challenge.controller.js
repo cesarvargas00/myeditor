@@ -23,7 +23,7 @@ exports.show = function(req, res) {
 // Creates a new challenge in the DB.
 exports.create = function(req, res) {
   Challenge.create(req.body, function(err, challenge) {
-    if(err) { return handleError(res, err); }
+    if(err) {return handleError(res, err); }
     return res.json(201, challenge);
   });
 };
