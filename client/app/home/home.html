@@ -45,9 +45,27 @@
         <div class="well col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h4>Challenges</h4>
             <hr>
-            <accordion ng-repeat="challenge in challenges" close-others="true">
-                <accordion-group heading="{{challenge.problem.title}} - {{challenge.duration}} minutes">
-                    {{challenge.friends.name}}
+            <accordion close-others="true">
+                <accordion-group ng-repeat="challenge in challenges" heading="{{challenge.problem.title}}">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Applicants</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="friend in challenge.friends">
+                                <td>{{friend.data.name}}</td>
+                                <td>
+                                <span ng-hide="{{friend.challengeData.hasStarted}}" class="label label-warning">Pending</span>
+                                <span ng-show="{{friend.challengeData.hasStarted}}" class="label label-warning">Started</span>
+                                <span ng-show="{{friend.challengeData.gotItRight}}" class="label label-success">Right</span>
+                                <span ng-hide="{{friend.challengeData.gotItRight}} || {{!friend.challengeData.hasFinished}}" class="label label-danger">Wrong</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </accordion-group>
             </accordion>
         </div>

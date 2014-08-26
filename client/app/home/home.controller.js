@@ -9,17 +9,24 @@ angular.module('myEditorApp')
             socket.syncUpdates('problem', $scope.problems);
             $http.get('/api/challenges').success(function(challenges) {
                 _(challenges).forEach(function(challenge) {
+                    var friends = [];
+                    _(challenge.people).forEach(function(person) {
+                        _(Auth.getCurrentUser().friends).forEach(function(friend) {
+                            if (person.user_id === friend._id) {
+                                friends.push({data:friend, challengeData:person});
+                            }
+                        });
+                    });
+                    // must check on server not to get everything
                     if (challenge.owner_id === Auth.getCurrentUser()._id) {
                         $scope.challenges.push({
-                            duration:challenge.duration,
+                            duration: challenge.duration,
                             problem: _.find(problems, function(problem) {
                                 return problem._id === challenge.problem_id;
                             }),
-                            friends: _.find(Auth.getCurrentUser().friends, function(friend) {
-                                return _(challenge.people).forEach(function(person) {
-                                    return friend._id === person.user_id;
-                                });
-                            })
+                            friends: friends,
+                            problem_id: challenge.problem_id,
+                            id: challenge._id
                         });
                     }
                 });
@@ -39,20 +46,15 @@ angular.module('myEditorApp')
             });
         };
         $scope.deleteProblem = function(problem) {
-            $http.delete('api/problems/' + problem._id);
+            $http.delete('api/problems/' + problem._id).success(function(){
+              _($scope.challenges).where({problem_id:problem._id}).forEach(function(challenge){
+                $http.delete('api/challenges/'+ challenge.id);
+              });
+            });
             //make a ui-bootstrap modal later to ask if really wanna delete problem.
         };
 
         $scope.challenge = function(problem) {
-            // var modalInstance = $modal.open({
-            //     templateUrl: 'app/home/homeModal.html',
-            //     controller: 'ChallengeModalCtrl',
-            //     resolve: {
-            //         problem: function() {
-            //             return problem;
-            //         }
-            //     }
-            // });
             $location.path('/addChallenge/' + problem._id);
         };
 

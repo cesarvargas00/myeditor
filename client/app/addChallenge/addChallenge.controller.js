@@ -34,8 +34,8 @@ angular.module('myEditorApp')
                 problem_id: problem_id,
                 people: people,
                 duration: parseInt($scope.timeLength)
-            }).success(function(data) {
-                $location.path('/c/' + data._id);
+            }).success(function() {
+                $location.path('/home');
             });
         };
     });
