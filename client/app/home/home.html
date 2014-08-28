@@ -24,11 +24,10 @@
                       <td>{{problem.date | date: 'shortDate'}}</td>
                       <td>N/A</td>
                       <td>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-edit"></i></a>
-                        <a ng-click="challenge(problem)"><i class="glyphicon glyphicon-fire"></i></a>
-                        <a ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-share"></i></a>
-                        <a ng-click="open(problem)"><i class="glyphicon glyphicon-retweet"></i></a>
+                        <a popover="delete" popover-trigger="mouseenter"ng-click="deleteProblem(problem)"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a popover="edit" popover-trigger="mouseenter"ng-click="edit(problem)"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a popover="challenge" popover-trigger="mouseenter"ng-click="challenge(problem)"><i class="glyphicon glyphicon-fire"></i></a>
+                        <a popover="collaborate" popover-trigger="mouseenter"ng-click="open(problem)"><i class="glyphicon glyphicon-retweet"></i></a>
 
                       </td>
                     </tr>

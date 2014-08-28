@@ -20,6 +20,8 @@ angular.module('myEditorApp')
                 tests:''
             })
                 .success(function() {
+                    $scope.userForm.title.$setPristine();
+                    $scope.userForm.content.$setPristine();
                     $scope.description = "";
                     $scope.title = "";
                     $scope.feedback = true;

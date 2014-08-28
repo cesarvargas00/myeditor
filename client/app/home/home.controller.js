@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('myEditorApp')
-  .controller('HomeCtrl', function (socket, $http, $scope, Auth,$modal) {
+  .controller('HomeCtrl', function (socket, $http, $scope, Auth,$modal,$location) {
     $scope.problems = [];
     $http.get('/api/problems/').success(function(problems){
       $scope.problems = problems;
       socket.syncUpdates('problem', $scope.problems);
     });
+    $scope.edit= function(problem){
+      $location.path('/edit/'+problem._id);
+    }
     $scope.open = function(problem) {
           var modalInstance = $modal.open({
             templateUrl: 'components/popup/popup.html',

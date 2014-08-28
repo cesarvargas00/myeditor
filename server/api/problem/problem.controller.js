@@ -19,7 +19,7 @@ exports.show = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        if (!problem || problem.owner_id !== req.user._id.toString()) {
+        if (!problem) {
             return res.send(404);
         }
         return res.json(problem);

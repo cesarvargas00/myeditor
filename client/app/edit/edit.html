@@ -5,15 +5,15 @@
               <form ng-class="{ 'has-error' : userForm.title.$invalid && !userForm.title.$pristine }" name="userForm" novalidate>
                     <h2>Title</h2>
                     <hr>
-                    <input class="form-control" style="margin-bottom:15px;" type="text" id="title" name="title" placeholder="Put title here" ng-model="title" required>
+                    <input class="form-control" style="margin-bottom:15px;" type="text" id="title" name="title" placeholder="Put title here" ng-model="problem.title" required>
                     <div class="alert alert-danger" ng-show='userForm.title.$invalid && !userForm.title.$pristine' role="alert">title is required!</div>
                     <h2>Description</h2>
                     <hr>
 
-                    <summernote name = 'content' ng-model="description" height="300" required></summernote>
+                    <summernote name = 'content' ng-model="problem.description" height="300" required></summernote>
                      <div class="alert alert-danger" ng-show='userForm.content.$invalid && !userForm.content.$pristine' role="alert">content is required!</div>
 
-                    <button ng-disabled="userForm.$invalid" ng-click="addProblem()" style="margin:15px 0 15px 0;" type="button" id="sendProblem" class="btn btn-info">Save Problem</button>
+                    <button ng-disabled="userForm.$invalid" ng-click="save()" style="margin:15px 0 15px 0;" type="button" id="sendProblem" class="btn btn-info">Save Problem</button>
                     <div>
                         <div ng-show="feedback" class="alert alert-success" role="alert">
                            Problem saved! Click <a href="/home" class="alert-link">here</a> to check your problems!

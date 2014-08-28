@@ -13,6 +13,7 @@ angular.module('myEditorApp')
         };
         $scope.problem = {};
         $http.get('/api/problems/' + $routeParams.id).success(function(problem) {
+            console.log($routeParams.id);
             $scope.problem = problem;
         });
 

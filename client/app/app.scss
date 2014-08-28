@@ -82,7 +82,9 @@ multiselect .dropdown-menu > li > a {
   color: #E27A3F;
 }
 
-
+td > a > i {
+  margin-right : 10px
+}
 body{
   background-color:#fff;
   color:$color1;
@@ -99,6 +101,7 @@ body{
 @import 'admin/admin.scss';
 @import 'c/c.scss';
 @import 'collaborate/collaborate.scss';
+@import 'edit/edit.scss';
 @import 'friends/friends.scss';
 @import 'home/home.scss';
 @import 'main/main.scss';

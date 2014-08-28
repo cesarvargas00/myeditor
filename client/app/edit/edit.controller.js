@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('PCtrl', function($scope, $routeParams, $http, $modal) {
+  .controller('EditCtrl', function ($scope,$http,$routeParams,$modal,$location) {
         $scope.beenTested = false;
         $scope.testResult = '';
         $scope.modes = ['java'];
@@ -70,10 +70,3 @@ angular.module('myEditorApp')
             }
         };
     });
-
-var ModalInstanceCtrl = function($scope, $modalInstance,$location) {
-    $scope.ok = function() {
-        $modalInstance.close('user clicked ok');
-         $location.path('/home');
-    };
-};
