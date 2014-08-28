@@ -9,13 +9,14 @@ var ChallengeSchema = new Schema({
     people: [{
         user_id: String,
         timeStartedChallenge: Date,
-        solution: {
-          'java':String,
-          'cpp':String,
-          'python':String,
-          'javascript':String
-        },
+        solution: {type:Object, default:{
+          java:'',
+          python:'',
+          cpp:'',
+          javascript:''
+        }},
         hasStarted: {type:Boolean, default:false},
+        hasFinished: {type:Boolean, default:false},
         gotItRight: {type:Boolean, default:false}
     }],
     duration: Number
