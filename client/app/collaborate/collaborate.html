@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <style>
-  .ace_editor { height: 150px; font-size: 15px;}
+  .ace_editor { height: 300px; font-size: 15px;}
 </style>
 <div class="container">
     <div class="row">
@@ -25,14 +25,11 @@
                  <div ng-repeat='o in userList'><i style='color:#3D4C53'class='glyphicon glyphicon-eye-open'></i>  <span style="color:#0CDBE8">    {{o}}</span></div>
 
             </div>
-            <div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' ui-ace="codeOptions" ng-model="code.content"></div>
-        </div>
-    </div>
-    <div class="row" style="margin-bottom:15px;">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h4>Tests</h4>
-<!--              <select style="margin-bottom:15px;" class="form-control" ng-model="tests.currentMode" ng-options="mode for mode in modes" ng-change="testsModeChanged()"></select> -->
-            <div ui-ace="testsOptions" ng-model="tests.content"></div>
+            <!-- <div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' ui-ace="codeOptions" ng-model="code.content"></div> -->
+             <tabset class='col-xs-11 col-sm-11 col-md-11 col-lg-11'>
+              <tab heading='Solution' disabled=true></tab>
+              <tab heading='Run' active=true>  <div ui-ace="codeOptions" ng-model="tests.content"></div></tab>
+            </tabset>
         </div>
     </div>
     <div class="row" style="margin-bottom:15px;">

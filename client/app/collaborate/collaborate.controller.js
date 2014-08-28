@@ -8,7 +8,7 @@ angular.module('myEditorApp')
             currentMode: 'javascript'
         };
         $scope.tests = {
-            content: 'World',
+            content: '',
             currentMode: 'javascript'
         };
         $scope.problem = {};
@@ -37,16 +37,6 @@ angular.module('myEditorApp')
 
                 $scope.codeModeChanged = function() {
                     _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
-                };
-            }
-        };
-
-        $scope.testsOptions = {
-            mode: $scope.tests.currentMode,
-            onLoad: function(_ace) {
-                // HACK to have the ace instance in the scope...
-                $scope.testsModeChanged = function() {
-                    _ace.getSession().setMode("ace/mode/" + $scope.tests.currentMode.toLowerCase());
                 };
             }
         };
