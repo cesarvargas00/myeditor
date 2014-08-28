@@ -6,6 +6,7 @@
 'use strict';
 
 var Thing = require('../api/thing/thing.model');
+var Challenge = require('../api/challenge/challenge.model');
 var User = require('../api/user/user.model');
 var Problem = require('../api/problem/problem.model');
 
@@ -47,4 +48,7 @@ Thing.find({}).remove(function() {
 //       console.log('finished populating users');
 //     }
 //   );
+// });
+// Challenge.find({}).remove(function(){
+//   console.log("removed some stuff");
 // });

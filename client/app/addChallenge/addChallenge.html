@@ -1,31 +1,40 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="container">
-
-
-    <h3>Choose whos taking the challenge:</h3>
-    <div multi-select input-model="friends" button-label="name" item-label="name" tick-property="ticked">
-    </div>
-    <p>{{friends}}</p>
-    <h3>Choose what problem you want to challenge your friends:</h3>
-    <select class="form-control" ng-model="selectedProblem" ng-options="problem.title for problem in problems">
-        <option value="" selected>--</option>
-    </select>
-    <p>{{selectedProblem}}</p>
-    <h3>Whats the duration of this challenge after they click accept?</h3>
     <div class="row">
-        <div class="col-lg-1">
-            <input class="form-control" type="text" ng-model="timeLength">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1>Create a challenge!</h1>
         </div>
-        <div class="col-lg-2">
-            <select class="form-control" ng-model="metricTime">
-                <option value="" selected>--</option>
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-                <option value="days">Days</option>
-            </select>
+    </div>
+    <div class="well spacer">
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="selectedFriends">Who is taking the challenge?</label>
+                <br>
+                <multiselect id="selectedFriends" class="input-xlarge" multiple="true" ng-model="selectedFriends" options="f.name for f in friends"></multiselect>
+            </div>
         </div>
-
+        <div ng-hide="{{hasId}}" class="row">
+            <div class="form-group col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <label for="problemSelector">What problem do you want to challenge your friends?</label>
+                <select id="problemSelector" class="form-control" ng-model="selectedProblem" ng-options="problem.title for problem in problems">
+                    <option value="" selected>--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <label for="duration">Duration</label>
+                <input placeholder="min" id="duration" class="form-control" type="text" ng-model="timeLength">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <p>
+                <button ng-click="save()" class="spacer btn btn-danger">Challenge!</button>
+            </p>
+        </div>
     </div>
 
-
-    <!-- <script type="text/javascript" src="/js/addProblem.js"></script> -->
+</div>
+<!-- <script type="text/javascript" src="/js/addProblem.js"></script> -->
