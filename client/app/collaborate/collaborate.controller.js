@@ -24,20 +24,23 @@ angular.module('myEditorApp')
             mode: $scope.code.currentMode,
             onLoad: function(_ace) {
               var fireRef = new Firebase('my-editor.firebaseio.com/collaborate/'+$routeParams.sId);
-               var firepad = Firepad.fromACE(fireRef, _ace,{userId:Auth.getCurrentUser().name});
-
+              Auth.isLoggedInAsync(function(){
+                    var firepad = Firepad.fromACE(fireRef, _ace,{userId:Auth.getCurrentUser().name});
+                  console.log('outside');
                   fireRef.on('value',function(dataSnapshot){
+                  console.log('inside',dataSnapshot);
                    var temp = [];
                    dataSnapshot.child('users').forEach(function(d){
                      temp.push(d.name());
                    });
                    $scope.userList = temp;
-                  _.defer(function(){$scope.$apply();});
+                   _.defer(function(){$scope.$apply()});
                 });
-
                 $scope.codeModeChanged = function() {
                     _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
                 };
+              })
+
             }
         };
   });

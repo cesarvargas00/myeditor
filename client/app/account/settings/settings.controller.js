@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myEditorApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, User, Auth,$location) {
     $scope.errors = {};
 
     $scope.changePassword = function(form) {
@@ -10,6 +10,7 @@ angular.module('myEditorApp')
         Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
         .then( function() {
           $scope.message = 'Password successfully changed.';
+          $location.path('/');
         })
         .catch( function() {
           form.password.$setValidity('mongoose', false);
