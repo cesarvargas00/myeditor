@@ -17,16 +17,8 @@ angular.module('myEditorApp')
 
             $http.get('api/challenges/').success(function(c) {
                 $scope.myChallenges = c.myChallenges;
-                _(c.participatingChallenges).each(function(challenge){
-                    _(challenge.challengeData.people).each(function(person){
-                        if(person.user_id === Auth.getCurrentUser()._id){
-                          challenge.hasFinished = person.hasFinished;
-                        }
-                    });
-                });
                 $scope.participatingChallenges = c.participatingChallenges;
             });
-
         });
 
         $scope.open = function(problem) {
@@ -56,29 +48,27 @@ angular.module('myEditorApp')
         };
 
         $scope.takeChallenge = function(challenge) {
-            var challengeData = challenge.challengeData;
-            _(challengeData.people).each(function(person) {
+            _(challenge.people).each(function(person) {
                 if (!person.hasStarted) {
-                    if (person.user_id === Auth.getCurrentUser()._id) {
+                    if (person.user._id === Auth.getCurrentUser()._id) {
                         person.hasStarted = true;
                         person.timeStartedChallenge = new Date();
-                        delete challengeData.hasFinished; // delete appended helper data.
-                        $http.put('api/challenges/' + challengeData._id, challengeData).success(function(data) {
-                            $location.path('/c/' + challenge.challengeData._id);
+                        $http.put('api/challenges/' + challenge._id, challenge).success(function(data) {
+                            $location.path('/c/' + challenge._id);
                         });
                     }
                 } else {
-                    if (person.user_id === Auth.getCurrentUser()._id) {
+                    if (person.user._id === Auth.getCurrentUser()._id) {
                         var now = new Date();
                         var limitDate = new Date(person.timeStartedChallenge);
-                        limitDate.setSeconds(now.getSeconds() + challengeData.duration * 60);
+                        limitDate.setSeconds(now.getSeconds() + challenge.duration * 60);
                         if (now < limitDate) {
-                            $location.path('/c/' + challenge.challengeData._id);
+                            $location.path('/c/' + challenge._id);
                         } else {
                             if (!person.hasFinished) {
                                 person.hasFinished = true;
-                                $http.put('api/challenges/' + challengeData._id, challengeData).success(function(data) {
-                                    // $location.path('/home'); refresh not working
+                                $http.put('api/challenges/' + challenge._id, challenge).success(function(data) {
+                                    $location.path('/home'); //refresh not working?
                                 });
                             }
                         }

@@ -56,16 +56,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="user in challenge.users">
-                                        <td>{{user.name}}</td>
+                                    <tr ng-repeat="person in challenge.people">
+                                        <td>{{person.user.name}}</td>
                                         <!-- <td>{{challenge.challengeData.people[$index]}}</td> -->
 
                                         <td>
-                                            <span ng-hide="{{challenge.challengeData.people[$index].hasStarted}}" class="label label-warning">Pending</span>
-                                                <span ng-show="{{challenge.challengeData.people[$index].hasStarted}} && {{!challenge.challengeData.people[$index].hasFinished}}" class="label label-info">Started</span>
-                                                <span ng-show="{{challenge.challengeData.people[$index].gotItRight}}" class="label label-success">Right</span>
-                                                <span ng-show="{{challenge.challengeData.people[$index].hasFinished}}" class="label label-default">Finished</span>
-                                                <span ng-hide="{{challenge.challengeData.people[$index].gotItRight}} || {{!challenge.challengeData.people[$index].hasFinished}}" class="label label-danger">Wrong</span>
+                                            <span ng-hide="{{person.hasStarted}}" class="label label-warning">Pending</span>
+                                                <span ng-show="{{person.hasStarted}} && {{!person.hasFinished}}" class="label label-info">Started</span>
+                                                <span ng-show="{{person.gotItRight}}" class="label label-success">Right</span>
+                                                <span ng-show="{{person.hasFinished}}" class="label label-default">Finished</span>
+                                                <span ng-hide="{{person.gotItRight}} || {{!person.hasFinished}}" class="label label-danger">Wrong</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -98,15 +98,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="user in participatingChallenge.users">
-                                            <td>{{user.name}}
+                                        <tr ng-repeat="person in participatingChallenge.people">
+                                            <td>{{person.user.name}}
                                             </td>
                                             <td>
-                                                <span ng-hide="{{participatingChallenge.challengeData.people[$index].hasStarted}}" class="label label-warning">Pending</span>
-                                                <span ng-show="{{participatingChallenge.challengeData.people[$index].hasStarted}} && {{!participatingChallenge.challengeData.people[$index].hasFinished}}" class="label label-info">Started</span>
-                                                <span ng-show="{{participatingChallenge.challengeData.people[$index].gotItRight}}" class="label label-success">Right</span>
-                                                <span ng-show="{{participatingChallenge.challengeData.people[$index].hasFinished}}" class="label label-default">Finished</span>
-                                                <span ng-hide="{{participatingChallenge.challengeData.people[$index].gotItRight}} || {{!challenge.challengeData.people[$index].hasFinished}}" class="label label-danger">Wrong</span>
+                                                <span ng-hide="{{person.hasStarted}}" class="label label-warning">Pending</span>
+                                                <span ng-show="{{person.hasStarted}} && {{!person.hasFinished}}" class="label label-info">Started</span>
+                                                <span ng-show="{{person.gotItRight}}" class="label label-success">Right</span>
+                                                <span ng-show="{{person.hasFinished}}" class="label label-default">Finished</span>
+                                                <span ng-hide="{{person.gotItRight}} || {{!person.hasFinished}}" class="label label-danger">Wrong</span>
                                             </td>
                                         </tr>
                                     </tbody>

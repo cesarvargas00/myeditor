@@ -17,21 +17,21 @@ angular.module('myEditorApp')
 
         $scope.save = function() {
             var friends = $scope.selectedFriends;
-            var problem_id;
+            var problem;
             if (!$scope.hasId) {
-                problem_id = $scope.selectedProblem._id;
+                problem = $scope.selectedProblem._id;
             } else {
-                problem_id = $routeParams.id;
+                problem = $routeParams.id;
             }
 
             var people = [];
             _(friends).forEach(function(friend) {
-                people.push({user_id:friend._id});
+                people.push({user:friend._id});
             });
 
             $http.post('api/challenges', {
-                owner_id: Auth.getCurrentUser()._id,
-                problem_id: problem_id,
+                owner: Auth.getCurrentUser()._id,
+                problem: problem,
                 people: people,
                 duration: parseInt($scope.timeLength)
             }).success(function() {

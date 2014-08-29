@@ -19,51 +19,81 @@ var ChallengeObject = function(cd, u, p) {
 
 // Get list of challenges
 exports.index = function(req, res) {
-    Challenge.find(function(err, challenges) {
-        Problem.find(function(err, problems) {
-            User.find(function(err, users) {
-                var pMyChallenges = [];
-                var pParticipatingChallenges = [];
-                _(challenges).forEach(function(challenge) {
-                    if (req.user._id.toString() === challenge.owner_id) {
-                        pMyChallenges.push(challenge);
-                    } else {
-                        _(challenge.people).forEach(function(person) {
-                            if (person.user_id === req.user._id.toString()) {
-                                pParticipatingChallenges.push(challenge);
-                                return;
-                            }
-                        });
-                    }
-                });
-
-                var result = new ChallengeResult([], []);
-
-                var makeChallengeArray = function(challenges, problems, users) {
-                    var r = [];
-                    _(challenges).forEach(function(challenge) {
-                        var challengeObject = new ChallengeObject(challenge, [], {});
-                        challengeObject.problem = _.find(problems, function(problem) {
-                            return problem._id.toString() === challenge.problem_id;
-                        });
-                        _(users).forEach(function(user) {
-                            _(challenge.people).forEach(function(person) {
-                                if (user._id.toString() === person.user_id) {
-                                    challengeObject.users.push(user);
-                                }
-                            });
-                        });
-                        r.push(challengeObject);
+    Challenge
+        .find({
+            owner: req.user._id
+        })
+        .populate('owner', '_id name email')
+        .populate('problem')
+        .populate('people.user', '_id name email')
+        .exec(function(err, myChallenges) {
+            Challenge
+                .find({
+                    'people.user': req.user._id
+                })
+                .populate('owner', '_id name email')
+                .populate('problem')
+                .populate('people.user', '_id name email')
+                .exec(function(err, participatingChallenges) {
+                    return res.json({
+                        myChallenges: myChallenges,
+                        participatingChallenges: participatingChallenges
                     });
-                    return r;
-                };
 
-                result.myChallenges = makeChallengeArray(pMyChallenges, problems, users);
-                result.participatingChallenges = makeChallengeArray(pParticipatingChallenges, problems, users);
-                return res.json(result);
-            });
+                });
+            //
         });
-    });
+    //TODO
+    // Challenge.find({people.user:req.user._id}, function(err,challenges){
+    //   challengesImParticipating = challenges;
+    // });
+
+
+    // Challenge.find(function(err, challenges) {
+    //     Problem.find(function(err, problems) {
+    //         User.find(function(err, users) {
+    //             var pMyChallenges = [];
+    //             var pParticipatingChallenges = [];
+    //             _(challenges).forEach(function(challenge) {
+    //                 if (req.user._id.toString() === challenge.owner_id) {
+    //                     pMyChallenges.push(challenge);
+    //                 } else {
+    //                     _(challenge.people).forEach(function(person) {
+    //                         if (person.user_id === req.user._id.toString()) {
+    //                             pParticipatingChallenges.push(challenge);
+    //                             return;
+    //                         }
+    //                     });
+    //                 }
+    //             });
+
+    //             var result = new ChallengeResult([], []);
+
+    //             var makeChallengeArray = function(challenges, problems, users) {
+    //                 var r = [];
+    //                 _(challenges).forEach(function(challenge) {
+    //                     var challengeObject = new ChallengeObject(challenge, [], {});
+    //                     challengeObject.problem = _.find(problems, function(problem) {
+    //                         return problem._id.toString() === challenge.problem_id;
+    //                     });
+    //                     _(users).forEach(function(user) {
+    //                         _(challenge.people).forEach(function(person) {
+    //                             if (user._id.toString() === person.user_id) {
+    //                                 challengeObject.users.push(user);
+    //                             }
+    //                         });
+    //                     });
+    //                     r.push(challengeObject);
+    //                 });
+    //                 return r;
+    //             };
+
+    //             result.myChallenges = makeChallengeArray(pMyChallenges, problems, users);
+    //             result.participatingChallenges = makeChallengeArray(pParticipatingChallenges, problems, users);
+    //             return res.json(result);
+    //         });
+    //     });
+    // });
 };
 
 // Get a single challenge
@@ -94,8 +124,16 @@ exports.update = function(req, res) {
     if (req.body._id) {
         delete req.body._id;
     }
-    Challenge.findById(req.params.id, function(err, challenge) {
-        if (err) {
+
+    Challenge
+      .findById(req.params.id)
+      .populate('owner', '_id name email')
+      .populate('problem')
+      .populate('people.user', '_id name email')
+      .exec(function(err, challenge){
+        console.log(err);
+        console.log(challenge);
+         if (err) {
             return handleError(res, err);
         }
         if (!challenge) {
@@ -103,14 +141,41 @@ exports.update = function(req, res) {
         }
 
         var updated = _.merge(challenge, req.body);
-        updated.people = req.body.people; // merge is copying people wrong...
-        updated.save(function(err) {
-            if (err) {
-                return handleError(res, err);
-            }
-            return res.json(200, challenge);
-        });
-    });
+                challenge.save(function(err) {
+                    if (err) {
+                        console.log(err);
+                        return handleError(res, err);
+                    }
+                    console.log(challenge);
+                    return res.json(200, challenge);
+                });
+
+      });
+
+    // Challenge.findById(req.params.id, function(err, challenge) {
+    //     if (err) {
+    //         return handleError(res, err);
+    //     }
+    //     if (!challenge) {
+    //         return res.send(404);
+    //     }
+    //     // console.log(challenge);
+    //       challenge
+    //         .populate('owner', '_id name email')
+    //         .populate('problem')
+    //         .populate('people.user', '_id name email')
+    //         .exec(function() {
+    //             var updated = _.merge(challenge, req.body);
+    //             challenge.save(function(err) {
+    //                 if (err) {
+    //                     console.log(err);
+    //                     return handleError(res, err);
+    //                 }
+    //                 console.log(challenge);
+    //                 return res.json(200, challenge);
+    //             });
+    //         });
+    // });
 };
 
 // Deletes a challenge from the DB.

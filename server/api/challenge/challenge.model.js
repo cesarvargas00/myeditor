@@ -4,22 +4,60 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ChallengeSchema = new Schema({
-    owner_id: String,
-    problem_id: String,
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    problem: {
+        type: Schema.Types.ObjectId,
+        ref: 'Problem'
+    },
     people: [{
-        user_id: String,
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
         timeStartedChallenge: Date,
-        solution: {type:Object, default:{
-          java:'',
-          python:'',
-          cpp:'',
-          javascript:''
-        }},
-        hasStarted: {type:Boolean, default:false},
-        hasFinished: {type:Boolean, default:false},
-        gotItRight: {type:Boolean, default:false}
+        solution: {
+            type: Object,
+            default: {
+                java: '',
+                cpp: ''
+            }
+        },
+        hasStarted: {
+            type: Boolean,
+            default: false
+        },
+        hasFinished: {
+            type: Boolean,
+            default: false
+        },
+        gotItRight: {
+            type: Boolean,
+            default: false
+        },
+        score: {
+            type: Number,
+            default: 0
+        },
+        totalCases: {
+            type: Number,
+            default: 0
+        },
+        passingTestCases: {
+            type: Number,
+            default: 0
+        },
     }],
-    duration: Number
+    duration: Number,
+    run: {
+        type: Object,
+        default: {
+            java: '',
+            cpp: ''
+        }
+    },
 });
 
 module.exports = mongoose.model('Challenge', ChallengeSchema);
