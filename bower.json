@@ -21,7 +21,9 @@
     "angular-ui-ace": "~0.1.1",
     "firepad": "~0.1.4",
     "firebase": "~1.0.19",
-    "amitava82-angular-multiselect": "*"
+    "amitava82-angular-multiselect": "*",
+    "chartjs": "~0.2.0",
+    "angularfire": "~0.8.0"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

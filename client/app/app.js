@@ -9,7 +9,8 @@ angular.module('myEditorApp', [
   'ui.bootstrap',
   'summernote',
   'ui.ace',
-  'ui.multiselect'
+  'ui.multiselect',
+  "firebase"
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
