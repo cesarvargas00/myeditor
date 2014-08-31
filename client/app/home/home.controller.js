@@ -15,9 +15,10 @@ angular.module('myEditorApp')
             $scope.problems = problems;
             socket.syncUpdates('problem', $scope.problems);
 
-            $http.get('api/challenges/').success(function(c) {
+            $http.get('/api/challenges/').success(function(c) {
                 $scope.myChallenges = c.myChallenges;
                 $scope.participatingChallenges = c.participatingChallenges;
+                socket.syncUpdatesChallenge(Auth.getCurrentUser(),$scope.myChallenges,$scope.participatingChallenges);
             });
         });
 

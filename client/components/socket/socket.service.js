@@ -3,7 +3,6 @@
 
 angular.module('myEditorApp')
   .factory('socket', function(socketFactory) {
-
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io(null, {
       // Send auth token on connection, you will need to DI the Auth service above
@@ -16,6 +15,18 @@ angular.module('myEditorApp')
 
     return {
       socket: socket,
+      syncUpdatesChallenge:function(user,myChallenges,participatingChallenges){
+           socket.on('challenge:save',function(cha){
+              if(cha.owner._id == user._id) {
+                  myChallenges.push(cha);
+              }
+              cha.people.forEach(function(u){
+                  if(u.user._id == user._id){
+                    participatingChallenges.push(cha);
+                  }
+              })
+        });
+      },
       syncUpdateUser: function(user){
         socket.on('user:save',function(item){
             if(item._id === user._id) {
