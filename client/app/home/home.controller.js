@@ -13,6 +13,10 @@ angular.module('myEditorApp')
             $location.path('/edit/'+problem._id);
         }
 
+        $scope.isMyProblem = function(problem){
+            return problem.owner_id === Auth.getCurrentUser()._id;
+        };
+
         var checkIfFinished = function(challenges){
           _(challenges).each(function(c){
                     _(c.people).each(function(p){

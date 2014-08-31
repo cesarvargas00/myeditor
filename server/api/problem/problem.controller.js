@@ -5,7 +5,8 @@ var Problem = require('./problem.model');
 
 // Get list of problems from this user
 exports.index = function(req, res) {
-    Problem.find({owner_id:req.user._id},function(err, problems) {
+    Problem.find({},function(err, problems) {
+    // Problem.find({owner_id:req.user._id},function(err, problems) {
         if (err) {
             return handleError(res, err);
         }
