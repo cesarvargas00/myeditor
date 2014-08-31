@@ -1,23 +1,43 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('HomeCtrl', function(socket, $http, $scope, Auth, $modal, $location) {
+    .controller('HomeCtrl', function(socket, $http, $scope, Auth, $modal, $location, $timeout) {
         $scope.problems = [];
         $scope.myChallenges = [];
         $scope.participatingChallenges = [];
+        $scope.timers = [];
 
         var myChallenges = [];
         var participatingChallenges = [];
-        $scope.edit= function(problem){
+        $scope.edit = function(problem){
             $location.path('/edit/'+problem._id);
         }
+
+        var checkIfFinished = function(challenges){
+          _(challenges).each(function(c){
+                    _(c.people).each(function(p){
+                      if (p.hasStarted && !p.hasFinished){
+                        var now = new Date();
+                        var started = new Date(p.timeStartedChallenge);
+                        var elapsed = now - started;
+                        if(elapsed > c.duration * 60000){
+                          p.hasFinished = true;
+                        }
+                      }
+                    });
+                });
+        };
+
         $http.get('/api/problems/').success(function(problems) {
             $scope.problems = problems;
             socket.syncUpdates('problem', $scope.problems);
-
             $http.get('api/challenges/').success(function(c) {
                 $scope.myChallenges = c.myChallenges;
+                checkIfFinished($scope.myChallenges);
+                socket.syncUpdates('challenge', $scope.myChallenges);
                 $scope.participatingChallenges = c.participatingChallenges;
+                checkIfFinished($scope.participatingChallenges);
+                socket.syncUpdates('challenge', $scope.participatingChallenges);
             });
         });
 
