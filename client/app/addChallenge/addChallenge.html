@@ -30,6 +30,20 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Code</h4>
+            <select style="margin-bottom:15px;" class="form-control" ng-model="code.currentMode" ng-options="mode for mode in modes" ng-change="codeModeChanged()"></select>
+            <tabset>
+                <tab heading='Solution'>
+                    <div class="ace-editor" ui-ace="codeOptions" ng-model="code.solution[code.currentMode]"></div>
+                </tab>
+                <tab heading='Run'>
+                    <div class="ace-editor" ui-ace="testsOptions" ng-model="code.run[code.currentMode]"></div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <p>
                 <button ng-click="save()" class="spacer btn btn-danger">Challenge!</button>
             </p>

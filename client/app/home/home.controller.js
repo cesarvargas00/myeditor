@@ -49,7 +49,9 @@ angular.module('myEditorApp')
         };
 
         $scope.takeChallenge = function(challenge) {
+          console.log(challenge);
             _(challenge.people).each(function(person) {
+              console.log(person.hasStarted);
                 if (!person.hasStarted) {
                     if (person.user._id === Auth.getCurrentUser()._id) {
                         person.hasStarted = true;
