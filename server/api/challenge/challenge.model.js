@@ -22,7 +22,7 @@ var ChallengeSchema = new Schema({
             type: Object,
             default: {
                 java: '',
-                cpp: ''
+                c_cpp: ''
             }
         },
         hasStarted: {
@@ -55,7 +55,7 @@ var ChallengeSchema = new Schema({
         type: Object,
         default: {
             java: '',
-            cpp: ''
+            c_cpp: ''
         }
     },
 });
