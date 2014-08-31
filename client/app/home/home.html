@@ -7,6 +7,9 @@
         <div class="well spacer col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h3>Problems</h3>
             <hr>
+            <p ng-repeat="t in timers">
+              {{t}}
+            </p>
             <p ng-if="problems.length === 0">Hmm, it seems you don't have any problems yet. Wanna <a ng-href="/addProblem">add a problem</a> to your collection?</p>
             <table class="table table-hover" ng-if="problems.length !== 0">
                 <thead>
