@@ -8,7 +8,11 @@ var Challenge = require('./challenge.model');
 
 exports.register = function(socket) {
   Challenge.schema.post('save', function (doc) {
-    onSave(socket, doc);
+     doc.populate({path:'owner', select:'_id name email'})
+        .populate('problem')
+        .populate({path:'people.user', select:'_id name email'},function(err,d){
+            onSave(socket,d);
+        });
   });
   Challenge.schema.post('remove', function (doc) {
     onRemove(socket, doc);

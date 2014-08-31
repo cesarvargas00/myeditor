@@ -31,13 +31,15 @@ angular.module('myEditorApp')
         $http.get('/api/problems/').success(function(problems) {
             $scope.problems = problems;
             socket.syncUpdates('problem', $scope.problems);
+
             $http.get('api/challenges/').success(function(c) {
                 $scope.myChallenges = c.myChallenges;
                 checkIfFinished($scope.myChallenges);
                 socket.syncUpdates('challenge', $scope.myChallenges);
                 $scope.participatingChallenges = c.participatingChallenges;
                 checkIfFinished($scope.participatingChallenges);
-                socket.syncUpdates('challenge', $scope.participatingChallenges);
+                // socket.syncUpdates('challenge', $scope.participatingChallenges);
+                socket.syncUpdatesChallenge(Auth.getCurrentUser(),$scope.myChallenges,$scope.participatingChallenges);
             });
         });
 
