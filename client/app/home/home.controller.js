@@ -74,14 +74,12 @@ angular.module('myEditorApp')
         };
 
         $scope.takeChallenge = function(challenge) {
-          console.log(challenge);
             _(challenge.people).each(function(person) {
-              console.log(person.hasStarted);
                 if (!person.hasStarted) {
                     if (person.user._id === Auth.getCurrentUser()._id) {
                         person.hasStarted = true;
                         person.timeStartedChallenge = new Date();
-                        $http.put('api/challenges/' + challenge._id, challenge).success(function(data) {
+                        $http.put('api/challenges/' + challenge._id, person).success(function(data) {
                             $location.path('/c/' + challenge._id);
                         });
                     }
@@ -95,7 +93,7 @@ angular.module('myEditorApp')
                         } else {
                             if (!person.hasFinished) {
                                 person.hasFinished = true;
-                                $http.put('api/challenges/' + challenge._id, challenge).success(function(data) {
+                                $http.put('api/challenges/' + challenge._id, person).success(function(data) {
                                     $location.path('/home'); //refresh not working?
                                 });
                             }

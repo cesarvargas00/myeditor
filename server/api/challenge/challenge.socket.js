@@ -11,6 +11,9 @@ exports.register = function(socket) {
      doc.populate({path:'owner', select:'_id name email'})
         .populate('problem')
         .populate({path:'people.user', select:'_id name email'},function(err,d){
+            d.people.forEach(function(j){
+              // console.log(j.user.name,j.hasStarted,j.hasFinished);
+            });
             onSave(socket,d);
         });
   });
