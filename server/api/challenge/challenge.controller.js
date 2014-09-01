@@ -124,58 +124,25 @@ exports.update = function(req, res) {
     if (req.body._id) {
         delete req.body._id;
     }
-
-    Challenge
-      .findById(req.params.id)
-      .populate('owner', '_id name email')
-      .populate('problem')
-      .populate('people.user', '_id name email')
-      .exec(function(err, challenge){
-        console.log(err);
-        console.log(challenge);
-         if (err) {
-            return handleError(res, err);
+    var info = req.body;
+    Challenge.findById(req.params.id,function(err,data){
+        console.log(data.people[0],"---------",data.people[1]);
+        for(var i =0 ; i < data.people.length;i++) {
+            if(data.people[i].user.toString() === info.user._id) {
+                data.people[i].hasFinished = info.hasFinished;
+                data.people[i].hasStarted = info.hasStarted;
+                data.people[i].timeStartedChallenge = info.timeStartedChallenge;
+            }
         }
-        if (!challenge) {
-            return res.send(404);
-        }
-
-        var updated = _.merge(challenge, req.body);
-                challenge.save(function(err) {
-                    if (err) {
-                        console.log(err);
-                        return handleError(res, err);
-                    }
-                    console.log(challenge);
-                    return res.json(200, challenge);
+        data.save(function(err){
+            if(err) return handleError(res, err);
+            data.populate('owner', '_id name email')
+                .populate('problem')
+                .populate('people.user', '_id name email',function(err,d){
+                    return res.json(200,d);
                 });
-
-      });
-
-    // Challenge.findById(req.params.id, function(err, challenge) {
-    //     if (err) {
-    //         return handleError(res, err);
-    //     }
-    //     if (!challenge) {
-    //         return res.send(404);
-    //     }
-    //     // console.log(challenge);
-    //       challenge
-    //         .populate('owner', '_id name email')
-    //         .populate('problem')
-    //         .populate('people.user', '_id name email')
-    //         .exec(function() {
-    //             var updated = _.merge(challenge, req.body);
-    //             challenge.save(function(err) {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     return handleError(res, err);
-    //                 }
-    //                 console.log(challenge);
-    //                 return res.json(200, challenge);
-    //             });
-    //         });
-    // });
+        });
+    })
 };
 
 // Deletes a challenge from the DB.
