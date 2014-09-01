@@ -9,7 +9,7 @@ var config = require('./environment');
 // When the user disconnects.. perform this
 function onDisconnect(socket,list) {
   for(var i in list) {
-      if(list[i].id == socket.id) {
+      if(list[i].id === socket.id) {
         delete list[i];
         break;
       }

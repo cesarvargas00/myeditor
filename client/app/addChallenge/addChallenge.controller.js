@@ -26,7 +26,7 @@ angular.module('myEditorApp')
             'c_cpp':''
           },
           currentMode: 'java'
-        }
+        };
 
         $scope.save = function() {
             var friends = $scope.selectedFriends;
@@ -58,7 +58,7 @@ angular.module('myEditorApp')
             onLoad: function(_ace) {
                 // HACK to have the ace instance in the scope...
                 $scope.codeModeChanged = function() {
-                    _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
+                    _ace.getSession().setMode('ace/mode/' + $scope.code.currentMode.toLowerCase());
                     console.log('CHANGED!!!');
                     // Also have to change the code content
                 };
@@ -71,7 +71,7 @@ angular.module('myEditorApp')
                 // HACK to have the ace instance in the scope...
                 $scope.codeModeChanged = function() {
                   console.log('CHANGED!!!');
-                    _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
+                    _ace.getSession().setMode('ace/mode/' + $scope.code.currentMode.toLowerCase());
                     // Also have to change the tests content
                 };
             }
