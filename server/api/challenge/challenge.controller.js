@@ -126,7 +126,6 @@ exports.update = function(req, res) {
     }
     var info = req.body;
     Challenge.findById(req.params.id,function(err,data){
-        console.log(data.people[0],"---------",data.people[1]);
         for(var i =0 ; i < data.people.length;i++) {
             if(data.people[i].user.toString() === info.user._id) {
                 data.people[i].hasFinished = info.hasFinished;
