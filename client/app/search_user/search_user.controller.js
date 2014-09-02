@@ -7,7 +7,6 @@ angular.module('myEditorApp')
       $scope.add = function(id, $index) {
           Auth.addRequest(id,function(data){
              if(data.message === 'added') {
-               console.log(data);
                 $scope.message[$index] = true;
                 $scope.submitted = true;
              }

@@ -12,12 +12,19 @@ var ProblemSchema = new Schema({
   },
   description: String,
   solution: {
-      "java": String,
-      "javascript": String,
-      "cpp": String,
-      "python": String
+       type: Object,
+        default: {
+            java: '',
+            c_cpp: ''
+        }
   },
-  tests: String,
+  run : {
+        type: Object,
+        default: {
+            java: '',
+            c_cpp: ''
+        }
+  },
   date: {
       type: Date,
       default: Date.now

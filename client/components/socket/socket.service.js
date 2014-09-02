@@ -17,6 +17,13 @@ angular.module('myEditorApp')
       socket: socket,
       syncUpdatesChallenge:function(user,myChallenges,participatingChallenges){
            socket.on('challenge:save',function(cha){
+              if(cha.owner._id == user._id) {
+                myChallenges.forEach(function(m){
+                    if(m._id == cha._id) {
+                      m.people = cha.people;
+                    }
+                });
+              }
               cha.people.forEach(function(u){
                   if(u.user._id == user._id){
                      participatingChallenges.push(cha);

@@ -4,30 +4,46 @@ angular.module('myEditorApp')
     .controller('PCtrl', function($scope, $routeParams, $http, $modal) {
         $scope.beenTested = false;
         $scope.testResult = '';
-        $scope.modes = ['java'];
+        $scope.modes = ['java','c_cpp'];
         $scope.code = {
-            content: '',
-            currentMode: 'java'
+          run:{
+            'java':'',
+            'c_cpp':''
+          },
+          solution:{
+            'java':'',
+            'c_cpp':''
+          }
         };
-        $scope.tests = {
-            content: '',
-            currentMode: 'java'
-        };
+        $scope.currentMode = 'java'
         $scope.problem = {};
         //first thing being executed
         $http.get('/api/problems/' + $routeParams.id).success(function(problem) {
             $scope.problem = problem;
             if (problem.solution) {
-                $scope.code.content = problem.solution.java; //the first one.
+                $scope.code.solution.java = problem.solution.java; //the first one.
+                $scope.code.solution.c_cpp = problem.solution.c_cpp;
             }
-            if (problem.tests) {
-                $scope.tests.content = problem.tests;
+            if (problem.run) {
+                $scope.code.run.java = problem.run.java;
+                $scope.code.run.c_cpp = problem.run.c_cpp;
             }
         });
 
+        $scope.run = function() {
+          $http({
+              method: 'POST',
+              url: 'http://54.88.184.168/run',
+              data: $scope.problem
+          }).success(function(data){
+               $scope.output = data;
+          });
+        };
         $scope.save = function() {
-            $scope.problem.solution[$scope.code.currentMode] = $scope.code.content;
-            $scope.problem.tests = $scope.tests.content;
+           //$scope.problem.solution[$scope.code.currentMode] = $scope.code.content;
+            //$scope.problem.tests = $scope.tests.content;
+            $scope.problem.run = $scope.code.run;
+            $scope.problem.solution = $scope.code.solution;
             $http({
                 method: 'PUT',
                 url: '/api/problems/' + $scope.problem._id,
@@ -49,22 +65,22 @@ angular.module('myEditorApp')
         };
 
         $scope.codeOptions = {
-            mode: $scope.code.currentMode,
+            mode: $scope.currentMode,
             onLoad: function(_ace) {
                 // HACK to have the ace instance in the scope...
                 $scope.codeModeChanged = function() {
-                    _ace.getSession().setMode("ace/mode/" + $scope.code.currentMode.toLowerCase());
+                    _ace.getSession().setMode("ace/mode/" + $scope.currentMode.toLowerCase());
                     // Also have to change the code content
                 };
             }
         };
 
         $scope.testsOptions = {
-            mode: $scope.tests.currentMode,
+            mode: $scope.currentMode,
             onLoad: function(_ace) {
                 // HACK to have the ace instance in the scope...
                 $scope.testsModeChanged = function() {
-                    _ace.getSession().setMode("ace/mode/" + $scope.tests.currentMode.toLowerCase());
+                    _ace.getSession().setMode("ace/mode/" + $scope.currentMode.toLowerCase());
                     // Also have to change the tests content
                 };
             }

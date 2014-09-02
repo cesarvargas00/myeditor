@@ -229,7 +229,7 @@ exports.collaborate = function(req,res,next) {
 exports.search = function(req, res, next){
    var pattern = new RegExp('.*'+req.params.pattern+'.*','i');
    User.findById(req.user._id,function(err,user){
-      User.find({'name':pattern},function(err,users){
+      User.find({'_id':{$ne:user._id}}).find({'name':pattern},function(err,users){
         res.json(users.map(function(i){
           var temp = i.userData;
           temp.button = 'add';

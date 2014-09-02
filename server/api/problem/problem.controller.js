@@ -49,12 +49,14 @@ exports.update = function(req, res) {
         if (!problem) {
             return res.send(404);
         }
-        var updated = _.merge(problem, req.body);
-        updated.save(function(err) {
+        //var updated = _.merge(problem, req.body);
+        problem.solution = req.body.solution;
+        problem.run = req.body.run;
+        problem.save(function(err) {
             if (err) {
                 return handleError(res, err);
             }
-            return res.json(200, problem);
+            return res.json(200);
         });
     });
 };
