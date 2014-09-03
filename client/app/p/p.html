@@ -33,8 +33,9 @@
     <div class="row" style="margin-bottom:15px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div ng-show='output.result'>
-                <progressbar value="output.result.testsPassed/output.result.numberOfTests*100">your score is {{output.result.score}}</progressbar>
+                <progressbar ng-show="output.result.score > 0" value="output.result.testsPassed/output.result.numberOfTests*100">your score is {{output.result.score}}</progressbar>
             </div>
+            <div ng-show="output.result.score === 0">Your score is 0!</div>
             <div ng-show='output.stdout' class="alert alert-success" role='alert'>{{output.stdout}}</div>
             <div ng-show='output.stderr' class="alert alert-danger" role='alert'>{{output.stderr}}</div>
             <!-- <div ng-show='output.error' class="alert alert-info" role='alert'>{{output.error}}</div> -->
