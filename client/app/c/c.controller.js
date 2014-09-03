@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('CCtrl', function($scope, $http, $routeParams, Auth, $timeout, $activityIndicator, $modal) {
-        $scope.checkTime = function() {
-            $http.get('/api/challenges/' + $routeParams.id + '/time/')
-                .success(function(t) {
-                    $scope.remainingTime = t;
-                    console.log(t);
-                    $scope.hideTime = false;
-                    $timeout(function() {
-                        $scope.hideTime = true;
-                    }, 4000);
-                });
-        }
-        $scope.modes = ['java', 'c_cpp', 'javascript'];
-        $scope.hideTime = true;
-        $scope.code = {
-            solution: {
-                'java': 'helo'
-            },
-            currentMode: 'java'
-        };
+    .controller('CCtrl', function($scope, $http, $routeParams, Auth,$timeout, $activityIndicator, $modal) {
+      $scope.checkTime = function() {
+            $http.get('/api/challenges/'+$routeParams.id + '/time/')
+                 .success(function(t){
+                      $scope.remainingTime = t;
+                      console.log(t);
+                      $scope.hideTime = false;
+                      $timeout(function(){
+                           $scope.hideTime = true;
+                      },4000);
+                 });
+      }
+      $scope.modes=['java', 'c_cpp', 'javascript'];
+      $scope.hideTime = true;
+      $scope.code = {
+        solution:{
+          'java':'helo'
+        },
+        currentMode:'java'
+      };
 
         $scope.codeOptions = {
             mode: $scope.code.currentMode,
@@ -46,61 +46,46 @@ angular.module('myEditorApp')
         });
 
         $scope.run = function() {
-            $scope.submitted = true;
-            $scope.problem.run = $scope.challenge.run;
-            $scope.problem.solution = $scope.code.solution;
-            $activityIndicator.startAnimating();
-            $http({
-                method: 'POST',
-                url: 'http://54.88.184.168/run',
-                data: $scope.problem
-            }).success(function(data) {
-                $scope.submitted = false;
-                $activityIndicator.stopAnimating();
-                $scope.output = data;
-            });
+          $scope.submitted = true;
+          $scope.problem.run = $scope.challenge.run;
+          $scope.problem.solution = $scope.code.solution;
+          $activityIndicator.startAnimating();
+          $http({
+              method: 'POST',
+              url: 'http://54.88.184.168/run',
+              data: $scope.problem
+          }).success(function(data){
+               $scope.submitted = false;
+               $activityIndicator.stopAnimating();
+               $scope.output = data;
+          });
         };
 
-        $scope.save = function() {
-            $scope.submitted = true;
-            $scope.problem.run = $scope.challenge.run;
-            $scope.problem.solution = $scope.code.solution;
-            $http({
-                method: 'POST',
-                url: 'http://54.88.184.168/run',
-                data: $scope.problem
-            }).success(function(data) {
-                $scope.submitted = false;
-                $activityIndicator.stopAnimating();
-                _($scope.challenge.people).each(function(person) {
-                    if (person.user.toString() === Auth.getCurrentUser()._id.toString()) {
-                        person.solution = $scope.code.solution;
-                        person.hasFinished = true;
-                        console.log(data);
-                        if (data.result !== null){
-                          person.score = data.result.score;
-                        } else {
-                          person.score = 0;
-                        }
-                    }
+        $scope.save = function(){
+          _($scope.challenge.people).each(function(person){
+            if(person.user.toString() === Auth.getCurrentUser()._id.toString()){
+              person.solution = $scope.code.solution;
+              person.hasFinished = true;
+
+            };
+          });
+          $http({
+                method: 'PATCH',
+                url: '/api/challenges/' + $scope.challenge._id,
+                data: $scope.challenge
+            }).
+            success(function(data, status, headers, config) {
+                var modalInstance = $modal.open({
+                    templateUrl: '/app/c/modal.html',
+                    size: 'md',
+                    controller: ModalInstanceCtrl
                 });
-                $http({
-                    method: 'PATCH',
-                    url: '/api/challenges/' + $scope.challenge._id,
-                    data: $scope.challenge
-                }).
-                success(function(data, status, headers, config) {
-                    var modalInstance = $modal.open({
-                        templateUrl: '/app/c/modal.html',
-                        size: 'md',
-                        controller: ModalInstanceCtrl
-                    });
-                    modalInstance.result.then(function(a) {
-                        console.log(a);
-                    });
-                    console.log("saved");
-                }).
-                error(function(data, status, headers, config) {});
+                modalInstance.result.then(function(a) {
+                    console.log(a);
+                });
+            console.log("saved");
+            }).
+            error(function(data, status, headers, config) {
             });
         };
     });
