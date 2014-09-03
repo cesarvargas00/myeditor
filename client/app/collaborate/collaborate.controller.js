@@ -19,10 +19,15 @@ angular.module('myEditorApp')
 
         $scope.beenTested = false;
         $scope.testResult = '';
-
+        var ranOnce = false;
         $scope.codeOptions = {
             mode: $scope.code.currentMode,
             onLoad: function(_ace) {
+              if(ranOnce){
+                ranOnce = true;
+              } else{
+                return 0;
+              }
               var fireRef = new Firebase('my-editor.firebaseio.com/collaborate/'+$routeParams.sId);
               Auth.isLoggedInAsync(function(){
                     var firepad = Firepad.fromACE(fireRef, _ace,{userId:Auth.getCurrentUser().name});
