@@ -36,12 +36,22 @@
         </div>
     </div>
     <div class="row" style="margin-bottom:15px;">
-        <div class="spacer col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button id="test-btn" type="button" class="btn btn-default">Run & Test</button>
-            <button ng-click="save()" type="button" class="btn btn-success">Save</button>
-            <div id="myspin"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div ng-show='output.result'>
+                <progressbar value="output.result.testsPassed/output.result.numberOfTests*100">your score is {{output.result.score}}</progressbar>
+            </div>
+            <div ng-show='output.stdout' class="alert alert-success" role='alert'>{{output.stdout}}</div>
+            <div ng-show='output.stderr' class="alert alert-danger" role='alert'>{{output.stderr}}</div>
+            <div ng-show='output.error' class="alert alert-info" role='alert'>{{output.error}}</div>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button ng-disabled='submitted' type="button" ng-click="run()" class="btn btn-info">Run & Test</button>
+            <button ng-click="save()" ng-activity-indicator="SpinnerDark" class="btn btn-success">Save</button>
+        </div>
+
+
     </div>
+
     <div class="row" ng-show="beenTested">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div id="result" class="alert alert-success" role="alert">

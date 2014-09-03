@@ -20,11 +20,11 @@ angular.module('myEditorApp')
         $scope.modes = ['java', 'c_cpp'];
         $scope.code = {
           run:{
-            'java':'',
+            'java':'public class Run {\npublic static void main(String[] args){\nSystem.out.println("Hello World!");\n}\n}',
             'c_cpp':''
           },
           solution:{
-            'java':'',
+            'java':'public class Solution {}',
             'c_cpp':''
           },
           currentMode: 'java'

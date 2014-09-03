@@ -145,6 +145,7 @@ exports.update = function(req, res) {
         delete req.body._id;
     }
     var info = req.body;
+    console.log(info);
     Challenge.findById(req.params.id,function(err,data){
         for(var i =0 ; i < data.people.length;i++) {
             if(data.people[i].user.toString() === info.user._id) {
@@ -160,6 +161,20 @@ exports.update = function(req, res) {
                 .populate('people.user', '_id name email',function(err,d){
                     return res.json(200,d);
                 });
+        });
+    })
+};
+
+exports.merge = function(req, res) {
+    if (req.body._id) {
+        delete req.body._id;
+    }
+
+    Challenge.findById(req.params.id,function(err,challenge){
+        challenge = _.merge(challenge, req.body);
+        challenge.save(function(err){
+            if(err) return handleError(res, err);
+            return res.json(200);
         });
     })
 };

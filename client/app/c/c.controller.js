@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('CCtrl', function($scope, $http, $routeParams, Auth,$timeout) {
+    .controller('CCtrl', function($scope, $http, $routeParams, Auth,$timeout, $activityIndicator, $modal) {
       $scope.checkTime = function() {
             $http.get('/api/challenges/'+$routeParams.id + '/time/')
                  .success(function(t){
@@ -44,4 +44,54 @@ angular.module('myEditorApp')
                 $scope.code.solution = user.solution;
             });
         });
+
+        $scope.run = function() {
+          $scope.submitted = true;
+          $scope.problem.run = $scope.challenge.run;
+          $scope.problem.solution = $scope.code.solution;
+          $activityIndicator.startAnimating();
+          $http({
+              method: 'POST',
+              url: 'http://54.88.184.168/run',
+              data: $scope.problem
+          }).success(function(data){
+               $scope.submitted = false;
+               $activityIndicator.stopAnimating();
+               $scope.output = data;
+          });
+        };
+
+        $scope.save = function(){
+          _($scope.challenge.people).each(function(person){
+            if(person.user.toString() === Auth.getCurrentUser()._id.toString()){
+              person.solution = $scope.code.solution;
+              person.hasFinished = true;
+
+            }
+          });
+          $http({
+                method: 'PATCH',
+                url: '/api/challenges/' + $scope.challenge._id,
+                data: $scope.challenge
+            }).
+            success(function(data, status, headers, config) {
+                var modalInstance = $modal.open({
+                    templateUrl: '/app/c/modal.html',
+                    size: 'md',
+                    controller: ModalInstanceCtrl
+                });
+                modalInstance.result.then(function(a) {
+                    console.log(a);
+                });
+            console.log("saved");
+            }).
+            error(function(data, status, headers, config) {
+            });
+        };
     });
+
+var ModalInstanceCtrl = function($modalInstance) {
+    $scope.ok = function() {
+        $modalInstance.close('user clicked ok');
+    };
+};
