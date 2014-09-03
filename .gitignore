@@ -3,5 +3,5 @@ node_modules
 .tmp
 .sass-cache
 # client/bower_components
-dist
+# dist
 /server/config/local.env.js
