@@ -23,7 +23,7 @@ angular.module('myEditorApp')
         $scope.codeOptions = {
             mode: $scope.code.currentMode,
             onLoad: function(_ace) {
-              if(ranOnce){
+              if(!ranOnce){
                 ranOnce = true;
               } else{
                 return 0;
