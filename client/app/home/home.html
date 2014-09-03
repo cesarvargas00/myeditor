@@ -72,7 +72,7 @@
                                                 <span ng-hide="{{person.gotItRight}} || {{!person.hasFinished}}" class="label label-danger">Wrong</span>
                                         </td>
                                         <td>
-                                          <div ><progressbar value="55"></progressbar></div></td>
+                                          <div ><progressbar value="{{person.score}}"></progressbar></div></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -101,6 +101,7 @@
                                         <tr>
                                             <th>Applicants</th>
                                             <th>Status</th>
+                                            <th>Score</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -114,6 +115,7 @@
                                                 <span ng-show="{{person.hasFinished}}" class="label label-default">Finished</span>
                                                 <span ng-hide="{{person.gotItRight}} || {{!person.hasFinished}}" class="label label-danger">Wrong</span>
                                             </td>
+                                            <td>{{person.score}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
