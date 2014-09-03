@@ -171,7 +171,7 @@ exports.merge = function(req, res) {
 
     Challenge.findById(req.params.id,function(err,challenge){
         challenge = _.merge(challenge, req.body);
-        console.log(challenge,req.params.id);
+        console.log(challenge,req.body);
         challenge.save(function(err){
             if(err) return handleError(res, err);
             return res.json(200);

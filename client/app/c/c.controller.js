@@ -98,16 +98,18 @@ $scope.save = function() {
                 data: $scope.problem
             }).success(function(data) {
                 $scope.submitted = false;
-                $activityIndicator.stopAnimating();
                 _($scope.challenge.people).each(function(person) {
                     if (person.user.toString() === Auth.getCurrentUser()._id.toString()) {
                         person.solution = $scope.code.solution;
                         person.hasFinished = true;
-                        console.log(data);
                         if (data.result !== null){
                           person.score = data.result.score;
+                          person.totalCases = data.result.numberOfTests;
+                          person.passingTestCases = data.result.testsPassed;
                         } else {
                           person.score = 0;
+                          person.totalCases = data.result.numberOfTests;
+                          person.passingTestCases = data.result.testsPassed;
                         }
                     }
                 });
