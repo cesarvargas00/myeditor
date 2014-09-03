@@ -145,7 +145,6 @@ exports.update = function(req, res) {
         delete req.body._id;
     }
     var info = req.body;
-    console.log(info);
     Challenge.findById(req.params.id,function(err,data){
         for(var i =0 ; i < data.people.length;i++) {
             if(data.people[i].user.toString() === info.user._id) {
@@ -172,7 +171,7 @@ exports.merge = function(req, res) {
 
     Challenge.findById(req.params.id,function(err,challenge){
         challenge = _.merge(challenge, req.body);
-        console.log(challenge);
+        console.log(challenge,req.params.id);
         challenge.save(function(err){
             if(err) return handleError(res, err);
             return res.json(200);
