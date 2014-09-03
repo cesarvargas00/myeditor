@@ -47,7 +47,7 @@ angular.module('myEditorApp')
               data: $scope.problem
           }).success(function(data){
                $scope.submitted = false;
-               $activityIndicator.stopAnimating();1n2i3n4a5
+               $activityIndicator.stopAnimating();
                $scope.output = data;
           });
         };
