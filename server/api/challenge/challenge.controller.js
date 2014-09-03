@@ -119,6 +119,24 @@ exports.create = function(req, res) {
     });
 };
 
+ function dhm(t){
+    var cd = 24 * 60 * 60 * 1000,
+        ch = 60 * 60 * 1000,
+        d = Math.floor(t / cd),
+        h = '0' + Math.floor( (t - d * cd) / ch),
+        m = '0' + Math.round( (t - d * cd - h * ch) / 60000);
+    return [d, h.substr(-2), m.substr(-2)].join(':');
+};
+exports.getTime = function(req,res) {
+    Challenge.findById(req.params.id,function(err,c){
+        for(var i =0;i <c.people.length;i++) {
+          if(c.people[i].user.toString() === req.user._id.toString()) {
+            return res.json(200,{t:dhm(Date.now() - c.people[i].timeStartedChallenge)});
+          }
+        }
+    })
+}
+
 // Updates an existing challenge in the DB.
 exports.update = function(req, res) {
     if (req.body._id) {

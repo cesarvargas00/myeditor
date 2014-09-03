@@ -4,15 +4,17 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <h1>{{problem.title}}</h1>
             <hr>
             <div ng-bind-html="problem.description"></div>
             <hr>
-
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+          <button class="btn btn-info" ng-click="checkTime()">remaining time</button>
+          <div collapse="hideTime">
+          <div role='alert' class="alert alert-danger">{{remainingTime.t}}</div>
+        </div>
         </div>
     </div>
     <div class="row">
