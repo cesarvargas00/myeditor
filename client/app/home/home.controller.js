@@ -12,7 +12,17 @@ angular.module('myEditorApp')
         $scope.edit = function(problem){
             $location.path('/edit/'+problem._id);
         }
-
+        $scope.isFinished = function(challenge) {
+            var r = false;
+            challenge.people.forEach(function(p){
+                if(p.user._id === Auth.getCurrentUser()._id) {
+                  if(p.hasFinished) {
+                     r = true;
+                  }
+                }
+            });
+            return r;
+        }
         $scope.isMyProblem = function(problem){
             return problem.owner_id === Auth.getCurrentUser()._id;
         };

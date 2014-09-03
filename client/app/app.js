@@ -10,7 +10,8 @@ angular.module('myEditorApp', [
   'summernote',
   'ui.ace',
   'ui.multiselect',
-  "firebase"
+  'firebase',
+  'ngActivityIndicator'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

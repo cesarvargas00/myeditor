@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('myEditorApp')
-    .controller('PCtrl', function($scope, $routeParams, $http, $modal) {
+    .controller('PCtrl', function($scope, $routeParams, $http, $modal,$activityIndicator) {
+        $scope.submitted = false;
         $scope.beenTested = false;
         $scope.testResult = '';
         $scope.modes = ['java','c_cpp'];
@@ -31,11 +32,17 @@ angular.module('myEditorApp')
         });
 
         $scope.run = function() {
+          $scope.submitted = true;
+          $scope.problem.run = $scope.code.run;
+          $scope.problem.solution = $scope.code.solution;
+          $activityIndicator.startAnimating();
           $http({
               method: 'POST',
               url: 'http://54.88.184.168/run',
               data: $scope.problem
           }).success(function(data){
+               $scope.submitted = false;
+               $activityIndicator.stopAnimating();
                $scope.output = data;
           });
         };

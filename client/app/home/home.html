@@ -90,7 +90,7 @@
                     <accordion-group ng-repeat="participatingChallenge in participatingChallenges" heading="{{participatingChallenge.problem.title}}">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <button ng-hide="participatingChallenge.hasFinished" ng-class="{disabled:participatingChallenge.hasFinished}" ng-click="takeChallenge(participatingChallenge)" class="btn btn-success btn-xs">Take Challenge</button>
+                                <button ng-hide="participatingChallenge.hasFinished" ng-class="{disabled:participatingChallenge.hasFinished}" ng-click="takeChallenge(participatingChallenge)" class="btn btn-success btn-xs" ng-disabled='isFinished(participatingChallenge)'>Take Challenge</button>
                                 <div ng-show="participatingChallenge.hasFinished" class="alert alert-danger">Time is over!</div>
                             </div>
                         </div>
