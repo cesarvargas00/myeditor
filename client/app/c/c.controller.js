@@ -77,7 +77,11 @@ angular.module('myEditorApp')
                         person.solution = $scope.code.solution;
                         person.hasFinished = true;
                         console.log(data);
-                        person.score = data.result.score;
+                        if (typeof data.result.score !== 'undefined'){
+                          person.score = data.result.score;
+                        } else {
+                          person.score = 0;
+                        }
                     }
                 });
                 $http({
