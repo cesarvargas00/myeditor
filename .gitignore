@@ -1,7 +1,7 @@
 node_modules
-public
-.tmp
+# public
+# .tmp
 .sass-cache
-client/bower_components
-dist
+# client/bower_components
+# dist
 /server/config/local.env.js

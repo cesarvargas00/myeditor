@@ -3,7 +3,9 @@
 angular.module('myEditorApp')
     .controller('AddchallengeCtrl', function($http, $location, $scope, Auth, $routeParams) {
         $scope.problems = [];
-        $scope.friends = Auth.getCurrentUser().friends;
+        Auth.isLoggedInAsync(function() {
+          $scope.friends = Auth.getCurrentUser().friends;
+        });
         $scope.selectedFriends = [];
         $scope.hasId = typeof $routeParams.id !== 'undefined';
         if (!$scope.hasId) {
@@ -38,6 +40,7 @@ angular.module('myEditorApp')
             }
 
             var people = [];
+            console.log("Friends", friends);
             _(friends).forEach(function(friend) {
                 people.push({user:friend._id,solution:$scope.code.solution});
             });

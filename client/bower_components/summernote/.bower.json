@@ -1,0 +1,30 @@
+{
+  "name": "summernote",
+  "version": "0.5.3",
+  "main": [
+    "./dist/summernote.js",
+    "./dist/summernote.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0",
+    "bootstrap": ">= 3.0.1",
+    "font-awesome": ">= 4.1.0"
+  },
+  "homepage": "https://github.com/HackerWins/summernote",
+  "_release": "0.5.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.3",
+    "commit": "53a87f36bd782388afec2fea9f9f8f417172f45b"
+  },
+  "_source": "git://github.com/HackerWins/summernote.git",
+  "_target": "~0.5.0",
+  "_originalSource": "summernote"
+}
