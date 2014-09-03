@@ -131,7 +131,9 @@ exports.getTime = function(req,res) {
     Challenge.findById(req.params.id,function(err,c){
         for(var i =0;i <c.people.length;i++) {
           if(c.people[i].user.toString() === req.user._id.toString()) {
-            return res.json(200,{t:dhm(Date.now() - c.people[i].timeStartedChallenge)});
+            var rm = dhm(Date.now() - c.people[i].timeStartedChallenge);
+            rm = rm > 0? rm :0
+            return res.json(200,{t:rm});
           }
         }
     })

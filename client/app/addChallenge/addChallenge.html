@@ -1,5 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="container">
+    <form name='minForm' novalidate>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h1>Create a challenge!</h1>
@@ -24,9 +25,15 @@
         <div class="row">
             <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <label for="duration">Duration</label>
-                <input placeholder="min" id="duration" class="form-control" type="text" ng-model="timeLength">
+                <input placeholder="min" class="form-control" type="number" name='input' ng-model="timeLength" min="1" required>
+                <div class="alert alert-danger" ng-show="!minForm.input.$pristine && minForm.input.$error.required && !minForm.input.$error.number" role="alert">required</div>
+
+               <div class="alert alert-danger" role="alert" ng-show="minForm.input.$error.number">Not valid number!</div>
+               <div class="alert alert-danger" role="alert" ng-show="minForm.input.$error.min">Must be positive number</div>
             </div>
+
         </div>
+        </form>
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -45,10 +52,10 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <p>
-                <button ng-click="save()" class="spacer btn btn-danger">Challenge!</button>
+                <button ng-click="save()" ng-disabled='!minForm.$valid' class="spacer btn btn-danger">Challenge!</button>
             </p>
         </div>
     </div>
-
+</form>
 </div>
 <!-- <script type="text/javascript" src="/js/addProblem.js"></script> -->

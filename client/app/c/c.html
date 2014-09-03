@@ -1,6 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <style>
   .ace_editor { height: 150px; font-size: 15px;}
+  .time {
+    width:  300%;
+  }
+  #showTime {
+     margin-top: 30px;
+  }
 </style>
 <div class="container">
     <div class="row">
@@ -11,9 +17,10 @@
             <hr>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-          <button class="btn btn-info" ng-click="checkTime()">remaining time</button>
-          <div collapse="hideTime">
-          <div role='alert' class="alert alert-danger">{{remainingTime.t}}</div>
+          <button id='showTime' class="btn btn-info" ng-click="checkTime()">remaining time</button>
+          <div class='time' collapse="hideTime">
+          <div role='alert' class="alert alert-danger" ng-if="remainingTime.t==0">time is up!</div>
+          <div role='alert' class="alert alert-danger" ng-if="remainingTime.t!=0">{{remainingTime.t}}</div>
         </div>
         </div>
     </div>
