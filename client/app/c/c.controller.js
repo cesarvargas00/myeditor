@@ -61,31 +61,75 @@ angular.module('myEditorApp')
           });
         };
 
-        $scope.save = function(){
-          _($scope.challenge.people).each(function(person){
-            if(person.user.toString() === Auth.getCurrentUser()._id.toString()){
-              person.solution = $scope.code.solution;
-              person.hasFinished = true;
-
-            }
-          });
-          $http({
-                method: 'PATCH',
-                url: '/api/challenges/' + $scope.challenge._id,
-                data: $scope.challenge
-            }).
-            success(function(data, status, headers, config) {
-                var modalInstance = $modal.open({
-                    templateUrl: '/app/c/modal.html',
-                    size: 'md',
-                    controller: ModalInstanceCtrl
+    //     $scope.save = function(){
+    //       _($scope.challenge.people).each(function(person){
+    //         if(person.user.toString() === Auth.getCurrentUser()._id.toString()){
+    //           person.solution = $scope.code.solution;
+    //           person.hasFinished = true;
+    //         };
+    //       });
+    //       $http({
+    //             method: 'PATCH',
+    //             url: '/api/challenges/' + $scope.challenge._id,
+    //             data: $scope.challenge
+    //         }).
+    //         success(function(data, status, headers, config) {
+    //             var modalInstance = $modal.open({
+    //                 templateUrl: '/app/c/modal.html',
+    //                 size: 'md',
+    //                 controller: ModalInstanceCtrl
+    //             });
+    //             modalInstance.result.then(function(a) {
+    //                 console.log(a);
+    //             });
+    //         console.log("saved");
+    //         }).
+    //         error(function(data, status, headers, config) {
+    //         });
+    //     };
+    // });
+$scope.save = function() {
+            $scope.submitted = true;
+            $scope.problem.run = $scope.challenge.run;
+            $scope.problem.solution = $scope.code.solution;
+            $http({
+                method: 'POST',
+                url: 'http://54.88.184.168/run',
+                data: $scope.problem
+            }).success(function(data) {
+                $scope.submitted = false;
+                _($scope.challenge.people).each(function(person) {
+                    if (person.user.toString() === Auth.getCurrentUser()._id.toString()) {
+                        person.solution = $scope.code.solution;
+                        person.hasFinished = true;
+                        if (data.result !== null){
+                          person.score = data.result.score;
+                          person.totalCases = data.result.numberOfTests;
+                          person.passingTestCases = data.result.testsPassed;
+                        } else {
+                          person.score = 0;
+                          person.totalCases = data.result.numberOfTests;
+                          person.passingTestCases = data.result.testsPassed;
+                        }
+                    }
                 });
-                modalInstance.result.then(function(a) {
-                    console.log(a);
-                });
-            console.log("saved");
-            }).
-            error(function(data, status, headers, config) {
+                $http({
+                    method: 'PATCH',
+                    url: '/api/challenges/' + $scope.challenge._id,
+                    data: $scope.challenge
+                }).
+                success(function(data, status, headers, config) {
+                    var modalInstance = $modal.open({
+                        templateUrl: '/app/c/modal.html',
+                        size: 'md',
+                        controller: ModalInstanceCtrl
+                    });
+                    modalInstance.result.then(function(a) {
+                        console.log(a);
+                    });
+                    console.log("saved");
+                }).
+                error(function(data, status, headers, config) {});
             });
         };
     });
