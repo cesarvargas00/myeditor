@@ -3,12 +3,11 @@
 angular.module('myEditorApp')
   .controller('SearchUserCtrl', function ($http,$scope,$routeParams,Auth,socket) {
     $scope.message = [];
-    $scope.submitted = false;
-      $scope.add = function(id, $index) {
+      $scope.add = function(id, $index,d) {
           Auth.addRequest(id,function(data){
              if(data.message === 'added') {
                 $scope.message[$index] = true;
-                $scope.submitted = true;
+                d.submitted = true;
              }
              socket.socket.emit('request',id);
           });

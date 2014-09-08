@@ -4,11 +4,13 @@
     <tr ng-repeat='d in docs'>
     <td class="info text-center">{{d.name}}</td>
     <td class="success">{{d.email}}</td>
+
     <td class='warning' ng-switch on='d.button'>
-    <div ng-switch-when="add">
-     <button  ng-hide='submitted' class='btn btn-info' ng-click='add(d._id,$index)'><i class='glyphicon glyphicon-plus'><span> {{d.button}}</span></i>
+
+    <div ng-switch-when="add" >
+     <button  ng-hide='d.submitted' class='btn btn-info' ng-click='add(d._id,$index,d)'><i class='glyphicon glyphicon-plus'><span> {{d.button}}</span></i>
     </button>
-     <span ng-show='submitted'>the request is sent </span></div>
+     <span ng-show='d.submitted'>the request is sent </span></div>
     <button  ng-disable='true' ng-switch-when='remove' class='btn btn-danger'><i class='glyphicon glyphicon-ok-sign'><span> added</span></i></button>
     <span ng-switch-when='requesting'>the request is sent </span>
     </td>
