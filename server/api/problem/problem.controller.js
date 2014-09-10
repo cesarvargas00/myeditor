@@ -52,6 +52,8 @@ exports.update = function(req, res) {
         //var updated = _.merge(problem, req.body);
         problem.solution = req.body.solution;
         problem.run = req.body.run;
+        problem.title = req.body.title;
+        problem.description = req.body.description;
         problem.save(function(err) {
             if (err) {
                 return handleError(res, err);
